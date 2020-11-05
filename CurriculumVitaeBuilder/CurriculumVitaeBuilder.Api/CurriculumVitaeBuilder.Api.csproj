@@ -28,6 +28,6 @@
 	
 
 	<ItemGroup>
-	  <Folder Include="Controllers\Command\" />
+	  <ProjectReference Include="..\Chest.Core\Chest.Core.csproj" />
 	</ItemGroup>
 </Project>

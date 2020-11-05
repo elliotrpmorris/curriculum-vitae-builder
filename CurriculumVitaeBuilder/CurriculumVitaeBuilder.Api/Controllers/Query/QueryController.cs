@@ -13,7 +13,10 @@ namespace CurriculumVitaeBuilder.Api.Controllers.Query
 
     using Microsoft.AspNetCore.Mvc;
 
-    public class QueryController : Controller
+    [Route("query")]
+    [Produces("application/json")]
+    [ApiController]
+    public class QueryController : ControllerBase
     {
         [HttpPost]
         public async Task<IActionResult> Query(
@@ -40,7 +43,7 @@ namespace CurriculumVitaeBuilder.Api.Controllers.Query
             {
                 foreach (var error in result.Errors)
                 {
-                    // TODO: Could track this via something like Azure Application Insights
+                    // TODO: Could track this via something like Azure Application Insights.
                 }
 
                 return this.BadRequest(result.Errors);
