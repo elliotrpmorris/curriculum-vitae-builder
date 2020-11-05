@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// <copyright file="IUserReader.cs" company="BJSS">
+// Copyright (c) BJSS. All rights reserved.
+// </copyright>
 
 namespace CurriculumVitaeBuilder.Domain.Data.User
 {
-    interface IUserReader
+    public interface IUserReader
     {
+
     }
 }

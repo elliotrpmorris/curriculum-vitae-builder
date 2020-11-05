@@ -4,10 +4,14 @@
 
 namespace CurriculumVitaeBuilder.Domain.Data.Cv
 {
+    using System;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// CV reader.
     /// </summary>
     public interface ICvReader
     {
+        public Task<Cv> GetCvByUserAsync(Guid userId);
     }
 }
