@@ -18,6 +18,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EAA9F0F2-0457-486D-B383-39A80BE055AC}"
 	ProjectSection(SolutionItems) = preProject
 		..\analysis.ruleset = ..\analysis.ruleset
+		docker-compose.yml = docker-compose.yml
 		..\README.md = ..\README.md
 		..\stylecop.json = ..\stylecop.json
 	EndProjectSection
