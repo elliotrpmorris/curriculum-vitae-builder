@@ -2,11 +2,11 @@
 This is a service to build and manipulate CV's
 
 
-# Setup
+## Setup
 
 To get the Curriculum Vitae Builder service up and running locally on your machine, just follow this step by step guide.
 
-## Requirements
+### Requirements
 
 * Docker - You will need Docker desktop installed and running. Docker desktop can be downloaded from the following pages:
 
@@ -15,7 +15,7 @@ To get the Curriculum Vitae Builder service up and running locally on your machi
 
   https://insomnia.rest/download/core
 
-## Steps
+### Steps
 
 1. From a terminal, navigate to the CurriculumVitaeBuilder folder inside the curriculum-vitae-builder folder, once there run:
     ```
@@ -59,5 +59,5 @@ To get the Curriculum Vitae Builder service up and running locally on your machi
 
 6. Setting up the server and database should now be complete, all you need to do now is run the API.
 
-# Querying the API 
+## Querying the API 
  Please note this example will be using Insomia but you can also query this using other tools for example Postman is a popular API client
