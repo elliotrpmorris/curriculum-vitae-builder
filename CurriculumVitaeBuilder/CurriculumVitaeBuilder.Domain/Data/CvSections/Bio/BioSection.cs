@@ -2,7 +2,7 @@
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Domain.Data.Cv.CvSections.Bio
+namespace CurriculumVitaeBuilder.Domain.Data.CvSections.Bio
 {
     using System;
 
@@ -17,12 +17,12 @@ namespace CurriculumVitaeBuilder.Domain.Data.Cv.CvSections.Bio
         /// <param name="id">The section identifier.</param>
         /// <param name="cvId">The CV identifier.</param>
         /// <param name="fullName">The full name.</param>
-        /// <param name="dateOfBirth">The date of birth.</param>
+        /// <param name="city">The city.</param>
         public BioSection(
             Guid id,
             Guid cvId,
             string fullName,
-            DateTime dateOfBirth)
+            string city)
             : base(id, cvId)
         {
             if (string.IsNullOrWhiteSpace(fullName))
@@ -30,13 +30,13 @@ namespace CurriculumVitaeBuilder.Domain.Data.Cv.CvSections.Bio
                 throw new ArgumentException(nameof(fullName));
             }
 
-            if (dateOfBirth == default)
+            if (city == default)
             {
-                throw new ArgumentException(nameof(dateOfBirth));
+                throw new ArgumentException(nameof(city));
             }
 
             this.FullName = fullName;
-            this.DateOfBirth = dateOfBirth;
+            this.City = city;
 
             this.Title = "Bio";
         }
@@ -47,9 +47,9 @@ namespace CurriculumVitaeBuilder.Domain.Data.Cv.CvSections.Bio
         public string FullName { get; }
 
         /// <summary>
-        /// Gets the date of birth.
+        /// Gets the city.
         /// </summary>
-        public DateTime DateOfBirth { get; }
+        public string City { get; }
 
         /// <summary>
         /// Gets or sets the Title.

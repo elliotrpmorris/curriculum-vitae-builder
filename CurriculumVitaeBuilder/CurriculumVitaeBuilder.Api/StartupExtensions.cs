@@ -5,8 +5,10 @@
 namespace CurriculumVitaeBuilder.Api
 {
     using CurriculumVitaeBuilder.Api.Controllers.Query;
+    using CurriculumVitaeBuilder.Api.Controllers.Query.DataLoaders;
     using CurriculumVitaeBuilder.Api.Controllers.Query.UserRoot;
     using CurriculumVitaeBuilder.Api.Controllers.Query.UserRoot.Types;
+    using CurriculumVitaeBuilder.Api.Controllers.Query.UserRoot.Types.Sections;
 
     using GraphQL;
     using GraphQL.DataLoader;
@@ -51,8 +53,15 @@ namespace CurriculumVitaeBuilder.Api
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // Types
-            services.AddScoped<UserType>();
             services.AddScoped<UserQuery>();
+
+            services.AddScoped<CvSectionDataLoader>();
+
+            services.AddScoped<UserType>();
+            services.AddScoped<CvType>();
+
+            services.AddScoped<BioSectionType>();
+            services.AddScoped<ContactSectionType>();
 
             return services;
         }

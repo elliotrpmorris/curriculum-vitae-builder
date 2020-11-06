@@ -2,7 +2,7 @@
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Domain.Data.Cv.CvSections.SkillsProfile
+namespace CurriculumVitaeBuilder.Domain.Data.CvSections.SkillsProfile
 {
     using System;
     using System.Collections.Generic;

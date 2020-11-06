@@ -2,12 +2,12 @@
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Domain.Data.Cv.CvSections
+namespace CurriculumVitaeBuilder.Domain.Data.CvSections
 {
     using System;
     using System.Collections.Generic;
 
-    using CurriculumVitaeBuilder.Domain.Data.Cv.CvSections.JobHistory;
+    using CurriculumVitaeBuilder.Domain.Data.CvSections.JobHistory;
 
     /// <summary>
     /// Job History section.

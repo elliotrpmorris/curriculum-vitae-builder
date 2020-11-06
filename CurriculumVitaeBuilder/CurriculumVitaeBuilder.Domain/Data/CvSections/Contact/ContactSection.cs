@@ -2,7 +2,7 @@
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Domain.Data.Cv.CvSections.Contact
+namespace CurriculumVitaeBuilder.Domain.Data.CvSections.Contact
 {
     using System;
     using System.Collections.Generic;
@@ -21,7 +21,7 @@ namespace CurriculumVitaeBuilder.Domain.Data.Cv.CvSections.Contact
         public ContactSection(
             Guid id,
             Guid cvId,
-            IReadOnlyCollection<ContactDetail> contactDetails)
+            IDictionary<string, string> contactDetails)
             : base(id, cvId)
         {
             this.ContactDetails = contactDetails
@@ -33,7 +33,7 @@ namespace CurriculumVitaeBuilder.Domain.Data.Cv.CvSections.Contact
         /// <summary>
         /// Gets the collection of contact details.
         /// </summary>
-        public IReadOnlyCollection<ContactDetail> ContactDetails { get; }
+        public IDictionary<string, string> ContactDetails { get; }
 
         /// <summary>
         /// Gets or sets the Title.

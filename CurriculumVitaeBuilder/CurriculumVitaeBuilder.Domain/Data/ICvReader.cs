@@ -2,7 +2,7 @@
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Domain.Data.Cv
+namespace CurriculumVitaeBuilder.Domain.Data
 {
     using System;
     using System.Threading.Tasks;
@@ -12,6 +12,6 @@ namespace CurriculumVitaeBuilder.Domain.Data.Cv
     /// </summary>
     public interface ICvReader
     {
-        public Task<Cv> GetCvByUserAsync(Guid userId);
+        public Task<Cv?> GetCvByUserAsync(Guid userId);
     }
 }

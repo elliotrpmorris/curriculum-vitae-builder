@@ -27,7 +27,7 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.User
 
             return new User(
                 user.Id,
-                user.FullName,
+                user.UserName,
                 user.CreatedAt);
         }
     }

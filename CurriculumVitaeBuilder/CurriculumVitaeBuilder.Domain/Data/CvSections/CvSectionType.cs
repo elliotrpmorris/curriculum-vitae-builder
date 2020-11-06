@@ -2,7 +2,7 @@
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Domain.Data.Cv.CvSections
+namespace CurriculumVitaeBuilder.Domain.Data.CvSections
 {
     /// <summary>
     /// An enum for selecting a CV section type.

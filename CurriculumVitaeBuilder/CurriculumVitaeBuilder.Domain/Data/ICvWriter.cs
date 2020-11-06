@@ -2,7 +2,7 @@
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Domain.Data.Cv
+namespace CurriculumVitaeBuilder.Domain.Data
 {
     /// <summary>
     /// CV writer.

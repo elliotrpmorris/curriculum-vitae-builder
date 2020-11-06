@@ -18,9 +18,9 @@ namespace CurriculumVitaeBuilder.Api.Controllers.Query.UserRoot.Types
                 .Description("The user identifier.")
                 .Resolve(context => context.Source.Id);
 
-            this.Field(p => p.FullName)
-                .Name("fullName")
-                .Description("The users name.");
+            this.Field(p => p.UserName)
+                .Name("userName")
+                .Description("The user name.");
 
             this.Field<StringGraphType, string?>("createdAt")
                 .Description("The time the user was created.")

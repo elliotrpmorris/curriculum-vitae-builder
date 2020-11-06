@@ -1,22 +1,22 @@
-﻿// <copyright file="CvSection.cs" company="BJSS">
+﻿// <copyright file="CvSectionDocument.cs" company="BJSS">
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Domain.Data.Cv.CvSections
+namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections
 {
     using System;
 
     /// <summary>
-    /// CV section.
+    /// CV Section Document.
     /// </summary>
-    public abstract class CvSection
+    public abstract class CvSectionDocument
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CvSection"/> class.
+        /// Initializes a new instance of the <see cref="CvSectionDocument"/> class.
         /// </summary>
         /// <param name="id">The section identifier.</param>
         /// <param name="cvId">The CV identifier.</param>
-        public CvSection(
+        public CvSectionDocument(
             Guid id,
             Guid cvId)
         {
@@ -32,8 +32,6 @@ namespace CurriculumVitaeBuilder.Domain.Data.Cv.CvSections
 
             this.Id = id;
             this.CvId = cvId;
-
-            // this.Title = "Section Title";
         }
 
         /// <summary>
