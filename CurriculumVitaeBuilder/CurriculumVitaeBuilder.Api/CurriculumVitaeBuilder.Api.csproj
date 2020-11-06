@@ -29,5 +29,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Chest.Core\Chest.Core.csproj" />
+	  <ProjectReference Include="..\CurriculumVitaeBuilder.Domain\CurriculumVitaeBuilder.Domain.csproj" />
+	  <ProjectReference Include="..\CurriculumVitaeBuilder.Infrastructure\CurriculumVitaeBuilder.Infrastructure.csproj" />
 	</ItemGroup>
 </Project>

@@ -11,10 +11,15 @@ namespace CurriculumVitaeBuilder.Domain.Data.User
     /// </summary>
     public class User
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="User"/> class.
+        /// </summary>
+        /// <param name="id">The user identifier.</param>
+        /// <param name="fullName">The full name.</param>
+        /// <param name="createdAt">The created at time.</param>
         public User(
             Guid id,
             string fullName,
-            DateTime dateOfBirth,
             DateTime createdAt)
         {
             if (id == default)
@@ -28,10 +33,13 @@ namespace CurriculumVitaeBuilder.Domain.Data.User
             }
 
             this.Id = id;
+            this.FullName = fullName;
             this.CreatedAt = createdAt;
         }
 
         public Guid Id { get; }
+
+        public string FullName { get; }
 
         public DateTime CreatedAt { get; }
     }

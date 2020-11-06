@@ -4,6 +4,8 @@
 
 namespace CurriculumVitaeBuilder.Api
 {
+    using CurriculumVitaeBuilder.Infrastructure.Data.Marten;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +26,10 @@ namespace CurriculumVitaeBuilder.Api
                });
 
             services.AddHealthChecks();
+
+            services.AddMartenDataAccess();
+
+            services.RegisterGraphQL();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

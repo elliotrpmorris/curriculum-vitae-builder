@@ -4,8 +4,14 @@
 
 namespace CurriculumVitaeBuilder.Domain.Data.User
 {
+    using System;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// User reader.
+    /// </summary>
     public interface IUserReader
     {
-
+        public Task<User?> GetUserByIdAsync(Guid userId);
     }
 }

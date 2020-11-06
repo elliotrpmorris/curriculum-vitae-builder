@@ -16,18 +16,14 @@ namespace CurriculumVitaeBuilder.Domain.Data.Cv.CvSections.Bio
         /// </summary>
         /// <param name="id">The section identifier.</param>
         /// <param name="cvId">The CV identifier.</param>
-        /// <param name="title">The section title.</param>
-        /// <param name="subtitle">The optional section subtitle.</param>
         /// <param name="fullName">The full name.</param>
         /// <param name="dateOfBirth">The date of birth.</param>
         public BioSection(
             Guid id,
             Guid cvId,
-            string title,
-            string? subtitle,
             string fullName,
             DateTime dateOfBirth)
-            : base(id, cvId, title, subtitle)
+            : base(id, cvId)
         {
             if (string.IsNullOrWhiteSpace(fullName))
             {
@@ -54,5 +50,10 @@ namespace CurriculumVitaeBuilder.Domain.Data.Cv.CvSections.Bio
         /// Gets the date of birth.
         /// </summary>
         public DateTime DateOfBirth { get; }
+
+        /// <summary>
+        /// Gets or sets the Title.
+        /// </summary>
+        public override string Title { get; set; }
     }
 }
