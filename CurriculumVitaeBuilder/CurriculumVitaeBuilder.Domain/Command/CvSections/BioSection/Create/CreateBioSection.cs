@@ -14,18 +14,23 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.BioSection.Create
     [CommandName("CVSECTION/CREATE_BIO_SECTION")]
     public class CreateBioSection : ICommand
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateBioSection"/> class.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="cvId">The cv identifier.</param>
+        /// <param name="fullName">The full name.</param>
+        /// <param name="city">The city.</param>
         public CreateBioSection(
             Guid userId,
             Guid cvId,
             string fullName,
-            string city,
-            string? title = null)
+            string city)
         {
             this.UserId = userId;
             this.CvId = cvId;
             this.FullName = fullName;
             this.City = city;
-            this.Title = title;
         }
 
         /// <summary>
@@ -47,10 +52,5 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.BioSection.Create
         /// Gets the city.
         /// </summary>
         public string City { get; }
-
-        /// <summary>
-        /// Gets the Title.
-        /// </summary>
-        public string? Title { get; }
     }
 }

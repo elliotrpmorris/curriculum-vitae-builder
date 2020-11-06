@@ -27,16 +27,6 @@ namespace CurriculumVitaeBuilder.Api.Controllers.Query.UserRoot
                .Description("User information")
                .ResolveAsync(context => cvReader.GetCvByUserAsync(
                    context.Source.UserId));
-
-            //this.Field<CvQuery>()
-            //    .Name("cv")
-            //    .Argument<NonNullGraphType<StringGraphType>>("cvId", "The cv identifier.")
-            //    .Resolve(context =>
-            //    {
-            //        return new CvQueryContext(
-            //            context.Source.UserId,
-            //            context.GetArgument<Guid>("userId"));
-            //    });
         }
     }
 }

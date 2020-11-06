@@ -83,6 +83,7 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
                            .AddSubClass(typeof(SkillsProfileSectionDocument));
 
                        // Seed data.
+                       _.InitialData.Clear();
                        _.InitialData.Add(new SeedDataSetup(SeedData.UserDocuments));
                        _.InitialData.Add(new SeedDataSetup(SeedData.CvDocuments));
                        _.InitialData.Add(new SeedDataSetup(SeedData.ContactSectionDocuments));

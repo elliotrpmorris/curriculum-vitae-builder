@@ -12,6 +12,11 @@ namespace CurriculumVitaeBuilder.Domain.Data.User
     /// </summary>
     public interface IUserReader
     {
+        /// <summary>
+        /// Gets a user by identifier.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>The user.</returns>
         public Task<User?> GetUserByIdAsync(Guid userId);
     }
 }

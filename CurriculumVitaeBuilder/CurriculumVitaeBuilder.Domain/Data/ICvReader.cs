@@ -12,6 +12,11 @@ namespace CurriculumVitaeBuilder.Domain.Data
     /// </summary>
     public interface ICvReader
     {
+        /// <summary>
+        /// Gets a CV by identifier.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>The CV.</returns>
         public Task<Cv?> GetCvByUserAsync(Guid userId);
     }
 }

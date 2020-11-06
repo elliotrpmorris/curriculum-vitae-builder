@@ -1,4 +1,4 @@
-﻿// <copyright file="CreateSectionHandler.cs" company="BJSS">
+﻿// <copyright file="CreateBioSectionHandler.cs" company="BJSS">
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
@@ -23,7 +23,7 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Create
         /// Initializes a new instance of the <see cref="CreateBioSectionHandler"/> class.
         /// </summary>
         /// <param name="cvSectionReader">The CV section reader.</param>
-        /// <param name="cvSectionWriter">The CV section writer,</param>
+        /// <param name="cvSectionWriter">The CV section writer.</param>
         public CreateBioSectionHandler(
             ICvSectionReader<BioSection> cvSectionReader,
             ICvSectionWriter<BioSection> cvSectionWriter)

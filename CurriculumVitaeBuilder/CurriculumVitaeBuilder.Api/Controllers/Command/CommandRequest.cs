@@ -4,7 +4,6 @@
 
 namespace CurriculumVitaeBuilder.Api.Controllers.Command
 {
-
     using Newtonsoft.Json.Linq;
 
     /// <summary>
