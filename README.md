@@ -61,3 +61,56 @@ To get the Curriculum Vitae Builder service up and running locally on your machi
 
 ## Querying the API 
  Please note this example will be using Insomia but you can also query this using other tools for example Postman is a popular API client
+ 
+ 1. Open Insomnia Create a Get Request on the Body drop down click GraphQL Query for the url enter `http://localhost:5000/query`
+  To view the full CV put this as your request 
+```
+query {
+  user(userId: "3f169b60-3d10-4beb-b6f9-3bfe2e4e5526") {
+    info{
+      userName
+      id
+    }
+    cv{
+      id
+      bio{
+        title
+        city
+        fullName
+      }
+      contact{
+        title
+        contactDetails
+      }
+      education{
+        educationEstablishments{
+          name
+          start
+          end
+        }
+      }
+      jobHistory{
+        title
+        jobs{
+          employer
+          jobTitle
+          start
+          end
+          employer
+        }
+      }
+      skillsProfile{
+        title
+        skills{
+          name
+          description
+        }
+      }
+    }
+  }
+}
+
+```
+
+2. Hit send and see the graph appear!
+ 
