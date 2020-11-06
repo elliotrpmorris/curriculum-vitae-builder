@@ -57,14 +57,6 @@ To get the Curriculum Vitae Builder service up and running locally on your machi
  
  1. Open Insomnia. Create a Get Request on the Body drop down then click GraphQL Query. For the url enter `http://localhost:5000/query`
   
-  The below query will display a users CV and its sections.
-  
-  Since this API uses GraphQL you can ask for as little or as much as you want of the CV for example if you just wanted the bio and contact sections you can emit the rest of the query.
-  
-  You can also view the documentation inside Insomina to see what fields are avalible there. 
-  
-  Having a GraphQL API is super powerful as it  allows you to easily create complex querys. Aslong as its on the graph are there you can query it!
-  
 ```
 query {
   user(userId: "3f169b60-3d10-4beb-b6f9-3bfe2e4e5526") {
@@ -114,6 +106,14 @@ query {
 ```
 
 2. Hit send and see the graph appear!
+
+ The above query will display a users CV and its sections.
+  
+  Since this API uses GraphQL you can ask for as little or as much as you want of the CV for example if you just wanted the bio and contact sections you can emit the rest of the query.
+  
+  You can also view the documentation inside Insomina to see what fields are avalible there. 
+  
+  Having a GraphQL API is super powerful as it  allows you to easily create complex querys. Aslong as its on the graph are there you can query it!
 
 ## Sending Commands to the API 
 (Please note this example will be using Insomia but you can also query this using other tools for example Postman is a popular API client)
