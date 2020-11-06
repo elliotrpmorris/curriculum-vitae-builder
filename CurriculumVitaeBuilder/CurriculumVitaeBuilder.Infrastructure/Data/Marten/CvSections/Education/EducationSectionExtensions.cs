@@ -34,8 +34,8 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Education
         /// <summary>
         /// Convert Document to Data Object to Document.
         /// </summary>
-        /// <param name="section">The Data Object.</param>
-        /// <returns>The Gateway Data Object.</returns>
+        /// <param name="section">The Section.</param>
+        /// <returns>The Data Object.</returns>
         public static EducationSectionDocument ToEducationSectionDocument(this EducationSection section)
         {
             if (section == null)
