@@ -17,7 +17,7 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Contact
         /// Convert From Document to Data Object.
         /// </summary>
         /// <param name="section">The Section Document. </param>
-        /// <returns>The Gateway Data Object.</returns>
+        /// <returns>The Data Object.</returns>
         public static ContactSection ToContactSection(this ContactSectionDocument section)
         {
             if (section == null)
@@ -26,6 +26,24 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Contact
             }
 
             return new ContactSection(
+                section.Id,
+                section.CvId,
+                section.ContactDetails);
+        }
+
+        /// <summary>
+        /// Convert Document to Data Object to Document.
+        /// </summary>
+        /// <param name="section">The Data Object.</param>
+        /// <returns>The Gateway Data Object.</returns>
+        public static ContactSectionDocument ToContactSectionDocument(this ContactSection section)
+        {
+            if (section == null)
+            {
+                throw new ArgumentNullException(nameof(section));
+            }
+
+            return new ContactSectionDocument(
                 section.Id,
                 section.CvId,
                 section.ContactDetails);

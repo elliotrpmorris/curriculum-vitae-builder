@@ -30,5 +30,13 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections
         /// <returns>The dictionary of cv identifier and  section.</returns>
         public Task<IDictionary<Guid, T>> GetSectionByCvAsync(
             IReadOnlyCollection<Guid> cvIds);
+
+        /// <summary>
+        /// Gets the section by CV identifier.
+        /// </summary>
+        /// <param name="cvId">The CV identifier.</param>
+        /// <returns>The section.</returns>
+        public Task<bool> GetSectionExistsAsync(
+            Guid cvId);
     }
 }

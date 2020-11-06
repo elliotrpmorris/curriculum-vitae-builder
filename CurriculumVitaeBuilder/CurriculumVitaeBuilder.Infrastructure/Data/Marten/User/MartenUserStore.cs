@@ -8,7 +8,6 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.User
     using System.Threading.Tasks;
 
     using CurriculumVitaeBuilder.Domain.Data.User;
-    using CurriculumVitaeBuilder.Infrastructure.Data.Marten;
 
     using global::Marten;
 
@@ -20,19 +19,15 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.User
         /// <summary>
         /// Initializes a new instance of the <see cref="MartenUserStore"/> class.
         /// </summary>
-        /// <param name="documentStoreFactory">The Document Store Factory.</param>
+        /// <param name="documentStore">The Document Store Factory.</param>
         public MartenUserStore(
-            MartenDocumentStoreFactory documentStoreFactory)
+            IDocumentStore documentStore)
         {
-            this.DocumentStoreFactory = documentStoreFactory
-                ?? throw new ArgumentNullException(nameof(documentStoreFactory));
-
-            this.DocumentStore = this.DocumentStoreFactory.GetDocumentStore();
+            this.DocumentStore = documentStore
+                ?? throw new ArgumentNullException(nameof(documentStore));
         }
 
-        private MartenDocumentStoreFactory DocumentStoreFactory { get; }
-
-        private DocumentStore DocumentStore { get; }
+        private IDocumentStore DocumentStore { get; }
 
         /// <inheritdoc/>
         public async Task<User?> GetUserByIdAsync(Guid userId)

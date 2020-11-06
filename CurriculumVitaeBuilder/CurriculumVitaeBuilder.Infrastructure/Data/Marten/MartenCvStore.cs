@@ -19,19 +19,15 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
         /// <summary>
         /// Initializes a new instance of the <see cref="MartenCvStore"/> class.
         /// </summary>
-        /// <param name="documentStoreFactory">The Document Store Factory.</param>
+        /// <param name="documentStore">The Document Store Factory.</param>
         public MartenCvStore(
-            MartenDocumentStoreFactory documentStoreFactory)
+            IDocumentStore documentStore)
         {
-            this.DocumentStoreFactory = documentStoreFactory
-                ?? throw new ArgumentNullException(nameof(documentStoreFactory));
-
-            this.DocumentStore = this.DocumentStoreFactory.GetDocumentStore();
+            this.DocumentStore = documentStore
+                ?? throw new ArgumentNullException(nameof(documentStore));
         }
 
-        private MartenDocumentStoreFactory DocumentStoreFactory { get; }
-
-        private DocumentStore DocumentStore { get; }
+        private IDocumentStore DocumentStore { get; }
 
         /// <inheritdoc/>
         public async Task<Cv?> GetCvByUserAsync(Guid userId)

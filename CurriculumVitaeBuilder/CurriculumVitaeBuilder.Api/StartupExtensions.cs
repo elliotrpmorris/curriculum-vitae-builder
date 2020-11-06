@@ -4,6 +4,8 @@
 
 namespace CurriculumVitaeBuilder.Api
 {
+    using Chest.Core.Command;
+
     using CurriculumVitaeBuilder.Api.Controllers.Query;
     using CurriculumVitaeBuilder.Api.Controllers.Query.DataLoaders;
     using CurriculumVitaeBuilder.Api.Controllers.Query.UserRoot;
@@ -23,6 +25,19 @@ namespace CurriculumVitaeBuilder.Api
     /// </summary>
     internal static class StartupExtensions
     {
+        /// <summary>
+        /// Register Command pipeline.
+        /// </summary>
+        /// <param name="services">The container builder.</param>
+        /// <returns>A Container builder.</returns>
+        public static IServiceCollection RegisterCommandPipeline(this IServiceCollection services)
+        {
+            services.AddCommandBus(
+                typeof(CurriculumVitaeBuilder.Domain.Command.ICommandHandlerAssembly).Assembly);
+
+            return services;
+        }
+
         /// <summary>
         /// Registers GraphQL.
         /// </summary>

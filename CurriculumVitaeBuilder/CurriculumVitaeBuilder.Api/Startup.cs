@@ -4,15 +4,34 @@
 
 namespace CurriculumVitaeBuilder.Api
 {
+    using System;
+
     using CurriculumVitaeBuilder.Infrastructure.Data.Marten;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
 
     public class Startup
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Startup"/> class.
+        /// </summary>
+        /// <param name="config">The configuration provider.</param>
+        public Startup(IConfiguration config)
+        {
+            if (config == null)
+            {
+                throw new ArgumentNullException(nameof(config));
+            }
+
+            this.ConnectionString = config.GetConnectionString("Postgres");
+        }
+
+        private string ConnectionString { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services
@@ -27,7 +46,9 @@ namespace CurriculumVitaeBuilder.Api
 
             services.AddHealthChecks();
 
-            services.AddMartenDataAccess();
+            services.AddMartenDataAccess(this.ConnectionString);
+
+            services.RegisterCommandPipeline();
 
             services.RegisterGraphQL();
         }

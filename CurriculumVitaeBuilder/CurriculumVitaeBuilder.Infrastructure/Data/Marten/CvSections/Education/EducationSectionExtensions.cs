@@ -17,7 +17,7 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Education
         /// Convert From Document to Data Object.
         /// </summary>
         /// <param name="section">The Section Document. </param>
-        /// <returns>The Gateway Data Object.</returns>
+        /// <returns>The Data Object.</returns>
         public static EducationSection ToEducationSection(this EducationSectionDocument section)
         {
             if (section == null)
@@ -26,6 +26,24 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Education
             }
 
             return new EducationSection(
+                section.Id,
+                section.CvId,
+                section.EducationEstablishments);
+        }
+
+        /// <summary>
+        /// Convert Document to Data Object to Document.
+        /// </summary>
+        /// <param name="section">The Data Object.</param>
+        /// <returns>The Gateway Data Object.</returns>
+        public static EducationSectionDocument ToEducationSectionDocument(this EducationSection section)
+        {
+            if (section == null)
+            {
+                throw new ArgumentNullException(nameof(section));
+            }
+
+            return new EducationSectionDocument(
                 section.Id,
                 section.CvId,
                 section.EducationEstablishments);

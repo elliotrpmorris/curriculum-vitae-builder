@@ -4,6 +4,8 @@
 
 namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
 {
+    using Chest.Core.Logging;
+
     using CurriculumVitaeBuilder.Domain.Data;
     using CurriculumVitaeBuilder.Domain.Data.CvSections;
     using CurriculumVitaeBuilder.Domain.Data.CvSections.Bio;
@@ -11,12 +13,15 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
     using CurriculumVitaeBuilder.Domain.Data.CvSections.Education;
     using CurriculumVitaeBuilder.Domain.Data.CvSections.SkillsProfile;
     using CurriculumVitaeBuilder.Domain.Data.User;
+    using CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections;
     using CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio;
     using CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Contact;
     using CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Education;
     using CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.JobHistory;
     using CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.SkillsProfile;
     using CurriculumVitaeBuilder.Infrastructure.Data.Marten.User;
+
+    using global::Marten;
 
     using Microsoft.Extensions.DependencyInjection;
 
@@ -29,36 +34,88 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
         /// Registers Marten Data Access.
         /// </summary>
         /// <param name="services">The service collection.</param>
+        /// <param name="connectionString">The connection string.</param>
         /// <returns>The service collections.</returns>
         public static IServiceCollection AddMartenDataAccess(
-            this IServiceCollection services)
+            this IServiceCollection services,
+            string connectionString)
         {
-            services.AddTransient<MartenDocumentStoreFactory>();
+            services.AddSingleton<IDocumentStore>(
+                DocumentStore
+                   .For(_ =>
+                   {
+                       _.Connection(connectionString);
 
-            services.AddScoped<IUserReader, MartenUserStore>();
+                       _.CreateDatabasesForTenants(c =>
+                       {
+                           // This will create the DB if not there.
+                           c.ForTenant()
+                               .CheckAgainstPgDatabase()
+                               .WithOwner("postgres")
+                               .WithEncoding("UTF-8")
+                               .ConnectionLimit(-1)
+                               .OnDatabaseCreated(_ =>
+                                {
+                                    Logger.LogInformation("Database created");
+                                });
+                       });
+
+                       _.DdlRules.TableCreation = CreationStyle.CreateIfNotExists;
+
+                       // Schema setup.
+                       _.Schema.For<UserDocument>()
+                            .Identity(i => i.Id)
+                            .DocumentAlias("users");
+
+                       _.Schema.For<CvDocument>()
+                           .Identity(i => i.Id)
+                           .DocumentAlias("cv");
+
+                       _.Schema.For<CvSectionDocument>()
+                           .Identity(i => i.Id)
+                           .DocumentAlias("cv_sections")
+
+                           // Section Types.
+                           .AddSubClass(typeof(BioSectionDocument))
+                           .AddSubClass(typeof(ContactSectionDocument))
+                           .AddSubClass(typeof(EducationSectionDocument))
+                           .AddSubClass(typeof(JobHistorySectionDocument))
+                           .AddSubClass(typeof(SkillsProfileSectionDocument));
+
+                       // Seed data.
+                       _.InitialData.Add(new SeedDataSetup(SeedData.UserDocuments));
+                       _.InitialData.Add(new SeedDataSetup(SeedData.CvDocuments));
+                       _.InitialData.Add(new SeedDataSetup(SeedData.ContactSectionDocuments));
+                       _.InitialData.Add(new SeedDataSetup(SeedData.BioSectionDocuments));
+                       _.InitialData.Add(new SeedDataSetup(SeedData.EducationSectionDocuments));
+                       _.InitialData.Add(new SeedDataSetup(SeedData.JobHistorySectionDocuments));
+                       _.InitialData.Add(new SeedDataSetup(SeedData.SkillsProfileSectionDocuments));
+                   }));
+
+            services.AddTransient<IUserReader, MartenUserStore>();
 
             services
-                .AddScoped<ICvReader, MartenCvStore>();
+                .AddTransient<ICvReader, MartenCvStore>();
 
             services
-                .AddScoped<ICvSectionReader<BioSection>, MartenBioSectionStore>()
-                .AddScoped<ICvSectionWriter<BioSection>, MartenBioSectionStore>();
+                .AddTransient<ICvSectionReader<BioSection>, MartenBioSectionStore>()
+                .AddTransient<ICvSectionWriter<BioSection>, MartenBioSectionStore>();
 
             services
-                .AddScoped<ICvSectionReader<ContactSection>, MartenContactSectionStore>()
-                .AddScoped<ICvSectionWriter<ContactSection>, MartenContactSectionStore>();
+                .AddTransient<ICvSectionReader<ContactSection>, MartenContactSectionStore>()
+                .AddTransient<ICvSectionWriter<ContactSection>, MartenContactSectionStore>();
 
             services
-                .AddScoped<ICvSectionReader<EducationSection>, MartenEducationSectionStore>()
-                .AddScoped<ICvSectionWriter<EducationSection>, MartenEducationSectionStore>();
+                .AddTransient<ICvSectionReader<EducationSection>, MartenEducationSectionStore>()
+                .AddTransient<ICvSectionWriter<EducationSection>, MartenEducationSectionStore>();
 
             services
-                .AddScoped<ICvSectionReader<JobHistorySection>, MartenJobHistorySectionStore>()
-                .AddScoped<ICvSectionWriter<JobHistorySection>, MartenJobHistorySectionStore>();
+                .AddTransient<ICvSectionReader<JobHistorySection>, MartenJobHistorySectionStore>()
+                .AddTransient<ICvSectionWriter<JobHistorySection>, MartenJobHistorySectionStore>();
 
             services
-                .AddScoped<ICvSectionReader<SkillsProfileSection>, MartenSkillsProfileSectionStore>()
-                .AddScoped<ICvSectionWriter<SkillsProfileSection>, MartenSkillsProfileSectionStore>();
+                .AddTransient<ICvSectionReader<SkillsProfileSection>, MartenSkillsProfileSectionStore>()
+                .AddTransient<ICvSectionWriter<SkillsProfileSection>, MartenSkillsProfileSectionStore>();
 
             return services;
         }

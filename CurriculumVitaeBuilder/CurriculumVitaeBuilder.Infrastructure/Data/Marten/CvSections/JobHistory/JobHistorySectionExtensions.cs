@@ -17,7 +17,7 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.JobHistor
         /// Convert From Document to Data Object.
         /// </summary>
         /// <param name="section">The Section Document. </param>
-        /// <returns>The Gateway Data Object.</returns>
+        /// <returns>The Data Object.</returns>
         public static JobHistorySection ToJobHistorySection(this JobHistorySectionDocument section)
         {
             if (section == null)
@@ -26,6 +26,24 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.JobHistor
             }
 
             return new JobHistorySection(
+                section.Id,
+                section.CvId,
+                section.Jobs);
+        }
+
+        /// <summary>
+        /// Convert Document to Data Object to Document.
+        /// </summary>
+        /// <param name="section">The Data Object.</param>
+        /// <returns>The Gateway Data Object.</returns>
+        public static JobHistorySectionDocument ToJobHistorySectionDocument(this JobHistorySection section)
+        {
+            if (section == null)
+            {
+                throw new ArgumentNullException(nameof(section));
+            }
+
+            return new JobHistorySectionDocument(
                 section.Id,
                 section.CvId,
                 section.Jobs);

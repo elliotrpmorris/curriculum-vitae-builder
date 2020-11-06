@@ -9,6 +9,8 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Chest.Core.Logging;
+
     using CurriculumVitaeBuilder.Domain.Data.CvSections;
     using CurriculumVitaeBuilder.Domain.Data.CvSections.Bio;
 
@@ -23,30 +25,44 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio
         /// <summary>
         /// Initializes a new instance of the <see cref="MartenBioSectionStore"/> class.
         /// </summary>
-        /// <param name="documentStoreFactory">The Document Store Factory.</param>
+        /// <param name="documentStore">The Document Store Factory.</param>
         public MartenBioSectionStore(
-            MartenDocumentStoreFactory documentStoreFactory)
+            IDocumentStore documentStore)
         {
-            this.DocumentStoreFactory = documentStoreFactory
-                ?? throw new ArgumentNullException(nameof(documentStoreFactory));
-
-            this.DocumentStore = this.DocumentStoreFactory.GetDocumentStore();
+            this.DocumentStore = documentStore
+                ?? throw new ArgumentNullException(nameof(documentStore));
         }
 
-        private MartenDocumentStoreFactory DocumentStoreFactory { get; }
-
-        private DocumentStore DocumentStore { get; }
+        private IDocumentStore DocumentStore { get; }
 
         /// <inheritdoc/>
-        public Task AddAsync(BioSection section)
+        public async Task AddAsync(BioSection section)
         {
-            throw new NotImplementedException();
+            using var session = this.DocumentStore.LightweightSession();
+
+            var exists = await
+                session.Query<BioSectionDocument>().AnyAsync(s => s.CvId == section.CvId);
+
+            if (exists)
+            {
+                Logger.LogInformation($"{section.Title} Section Already exists for {section.CvId}");
+
+                return;
+            }
+
+            session.Store(section.ToBioSectionDocument());
+
+            await session.SaveChangesAsync();
         }
 
         /// <inheritdoc/>
-        public Task DeleteAsync(BioSection section)
+        public async Task DeleteAsync(BioSection section)
         {
-            throw new NotImplementedException();
+            using var session = this.DocumentStore.LightweightSession();
+
+            session.Delete(section.ToBioSectionDocument());
+
+            await session.SaveChangesAsync();
         }
 
         /// <inheritdoc/>
@@ -68,24 +84,57 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio
         {
             using var session = this.DocumentStore.LightweightSession();
 
-            var bioSections = await
+            var sections = await
                 session
                     .Query<BioSectionDocument>()
                     .Where(s => s.CvId.In(cvIds.ToList()))
                     .ToListAsync();
 
-            if (bioSections == null)
+            if (sections == null)
             {
                 return new Dictionary<Guid, BioSection>();
             }
 
-            return bioSections.ToDictionary(x => x.CvId, x => x.ToBioSection());
+            return sections.ToDictionary(x => x.CvId, x => x.ToBioSection());
         }
 
         /// <inheritdoc/>
-        public Task UpdateAsync(BioSection section)
+        public async Task<bool> GetSectionExistsAsync(Guid cvId)
         {
-            throw new NotImplementedException();
+            using var session = this.DocumentStore.LightweightSession();
+
+            var x = await
+               session
+                   .Query<BioSectionDocument>()
+                   .Where(x => x.CvId == cvId)
+                   .ToListAsync();
+
+            var exists = await
+                session
+                    .Query<BioSectionDocument>()
+                    .AnyAsync(s => s.CvId == cvId);
+
+            return exists;
+        }
+
+        /// <inheritdoc/>
+        public async Task UpdateAsync(BioSection section)
+        {
+            using var session = this.DocumentStore.LightweightSession();
+
+            var exists = await
+                session.Query<BioSectionDocument>().AnyAsync(s => s.CvId == section.CvId);
+
+            if (exists)
+            {
+                Logger.LogInformation($"{section.Title} Section Already exists for {section.CvId}");
+
+                return;
+            }
+
+            session.Update(section.ToBioSectionDocument());
+
+            await session.SaveChangesAsync();
         }
     }
 }

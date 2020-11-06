@@ -9,6 +9,8 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.SkillsPro
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Chest.Core.Logging;
+
     using CurriculumVitaeBuilder.Domain.Data.CvSections;
     using CurriculumVitaeBuilder.Domain.Data.CvSections.SkillsProfile;
 
@@ -23,30 +25,44 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.SkillsPro
         /// <summary>
         /// Initializes a new instance of the <see cref="MartenSkillsProfileSectionStore"/> class.
         /// </summary>
-        /// <param name="documentStoreFactory">The Document Store Factory.</param>
+        /// <param name="documentStore">The Document Store Factory.</param>
         public MartenSkillsProfileSectionStore(
-            MartenDocumentStoreFactory documentStoreFactory)
+            IDocumentStore documentStore)
         {
-            this.DocumentStoreFactory = documentStoreFactory
-                ?? throw new ArgumentNullException(nameof(documentStoreFactory));
-
-            this.DocumentStore = this.DocumentStoreFactory.GetDocumentStore();
+            this.DocumentStore = documentStore
+                ?? throw new ArgumentNullException(nameof(documentStore));
         }
 
-        private MartenDocumentStoreFactory DocumentStoreFactory { get; }
-
-        private DocumentStore DocumentStore { get; }
+        private IDocumentStore DocumentStore { get; }
 
         /// <inheritdoc/>
-        public Task AddAsync(SkillsProfileSection section)
+        public async Task AddAsync(SkillsProfileSection section)
         {
-            throw new NotImplementedException();
+            using var session = this.DocumentStore.LightweightSession();
+
+            var exists = await
+                session.Query<SkillsProfileSectionDocument>().AnyAsync(s => s.CvId == section.CvId);
+
+            if (exists)
+            {
+                Logger.LogInformation($"{section.Title} Section Already exists for {section.CvId}");
+
+                return;
+            }
+
+            session.Store(section.ToSkillsProfileSectionDocument());
+
+            await session.SaveChangesAsync();
         }
 
         /// <inheritdoc/>
-        public Task DeleteAsync(SkillsProfileSection section)
+        public async Task DeleteAsync(SkillsProfileSection section)
         {
-            throw new NotImplementedException();
+            using var session = this.DocumentStore.LightweightSession();
+
+            session.Delete(section.ToSkillsProfileSectionDocument());
+
+            await session.SaveChangesAsync();
         }
 
         /// <inheritdoc/>
@@ -83,9 +99,36 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.SkillsPro
         }
 
         /// <inheritdoc/>
-        public Task UpdateAsync(SkillsProfileSection section)
+        public async Task UpdateAsync(SkillsProfileSection section)
         {
-            throw new NotImplementedException();
+            using var session = this.DocumentStore.LightweightSession();
+
+            var exists = await
+                session.Query<SkillsProfileSectionDocument>().AnyAsync(s => s.CvId == section.CvId);
+
+            if (exists)
+            {
+                Logger.LogInformation($"{section.Title} Section Already exists for {section.CvId}");
+
+                return;
+            }
+
+            session.Update(section.ToSkillsProfileSectionDocument());
+
+            await session.SaveChangesAsync();
+        }
+
+        /// <inheritdoc/>
+        public async Task<bool> GetSectionExistsAsync(Guid cvId)
+        {
+            using var session = this.DocumentStore.LightweightSession();
+
+            var exists = await
+                session
+                    .Query<SkillsProfileSectionDocument>()
+                    .AnyAsync(s => s.CvId == cvId);
+
+            return exists;
         }
     }
 }
