@@ -15,12 +15,16 @@ namespace CurriculumVitaeBuilder.Api.Controllers.Query.UserRoot.Types.Sections
         public ContactSectionType()
         {
             this.Field<IdGraphType, Guid>("id")
-                .Description("The section identifier.")
-                .Resolve(context => context.Source.Id);
+                 .Description("The section identifier.")
+                 .Resolve(context => context.Source.Id);
 
             this.Field<IdGraphType, Guid>("cvId")
                 .Description("The cv identifier.")
                 .Resolve(context => context.Source.CvId);
+
+            this.Field(p => p.Title)
+                .Name("title")
+                .Description("The section title.");
 
             this.Field(p => p.ContactDetails)
                 .Name("contactDetails")

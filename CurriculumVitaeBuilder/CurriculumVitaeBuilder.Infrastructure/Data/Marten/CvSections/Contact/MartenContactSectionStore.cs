@@ -68,17 +68,18 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Contact
         {
             using var session = this.DocumentStore.LightweightSession();
 
-            var bioSections = await
+            var sections = await
                 session
                     .Query<ContactSectionDocument>()
+                    .Where(s => s.CvId.In(cvIds.ToList()))
                     .ToListAsync();
 
-            if (bioSections == null)
+            if (sections == null)
             {
                 return new Dictionary<Guid, ContactSection>();
             }
 
-            return bioSections.ToDictionary(x => x.CvId, x => x.ToContactSection());
+            return sections.ToDictionary(x => x.CvId, x => x.ToContactSection());
         }
 
         /// <inheritdoc/>

@@ -1,8 +1,8 @@
-﻿// <copyright file="MartenBioSectionStore.cs" company="BJSS">
+﻿// <copyright file="MartenSkillsProfileSectionStore.cs" company="BJSS">
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio
+namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.SkillsProfile
 {
     using System;
     using System.Collections.Generic;
@@ -10,21 +10,21 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio
     using System.Threading.Tasks;
 
     using CurriculumVitaeBuilder.Domain.Data.CvSections;
-    using CurriculumVitaeBuilder.Domain.Data.CvSections.Bio;
+    using CurriculumVitaeBuilder.Domain.Data.CvSections.SkillsProfile;
 
     using global::Marten;
 
     /// <summary>
-    /// Marten Bio Section store.
+    /// Marten Contact Section store.
     /// </summary>
-    internal sealed class MartenBioSectionStore
-        : ICvSectionReader<BioSection>, ICvSectionWriter<BioSection>
+    internal sealed class MartenSkillsProfileSectionStore
+        : ICvSectionReader<SkillsProfileSection>, ICvSectionWriter<SkillsProfileSection>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MartenBioSectionStore"/> class.
+        /// Initializes a new instance of the <see cref="MartenSkillsProfileSectionStore"/> class.
         /// </summary>
         /// <param name="documentStoreFactory">The Document Store Factory.</param>
-        public MartenBioSectionStore(
+        public MartenSkillsProfileSectionStore(
             MartenDocumentStoreFactory documentStoreFactory)
         {
             this.DocumentStoreFactory = documentStoreFactory
@@ -38,52 +38,52 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio
         private DocumentStore DocumentStore { get; }
 
         /// <inheritdoc/>
-        public Task AddAsync(BioSection section)
+        public Task AddAsync(SkillsProfileSection section)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public Task DeleteAsync(BioSection section)
+        public Task DeleteAsync(SkillsProfileSection section)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public async Task<BioSection?> GetSectionByCvAsync(Guid cvId)
+        public async Task<SkillsProfileSection?> GetSectionByCvAsync(Guid cvId)
         {
             using var session = this.DocumentStore.LightweightSession();
 
             var section = await
                 session
-                    .Query<BioSectionDocument>()
+                    .Query<SkillsProfileSectionDocument>()
                     .FirstOrDefaultAsync(s => s.CvId == cvId);
 
-            return section.ToBioSection() ?? null;
+            return section.ToSkillsProfile() ?? null;
         }
 
         /// <inheritdoc/>
-        public async Task<IDictionary<Guid, BioSection>> GetSectionByCvAsync(
+        public async Task<IDictionary<Guid, SkillsProfileSection>> GetSectionByCvAsync(
             IReadOnlyCollection<Guid> cvIds)
         {
             using var session = this.DocumentStore.LightweightSession();
 
-            var bioSections = await
+            var sections = await
                 session
-                    .Query<BioSectionDocument>()
+                    .Query<SkillsProfileSectionDocument>()
                     .Where(s => s.CvId.In(cvIds.ToList()))
                     .ToListAsync();
 
-            if (bioSections == null)
+            if (sections == null)
             {
-                return new Dictionary<Guid, BioSection>();
+                return new Dictionary<Guid, SkillsProfileSection>();
             }
 
-            return bioSections.ToDictionary(x => x.CvId, x => x.ToBioSection());
+            return sections.ToDictionary(x => x.CvId, x => x.ToSkillsProfile());
         }
 
         /// <inheritdoc/>
-        public Task UpdateAsync(BioSection section)
+        public Task UpdateAsync(SkillsProfileSection section)
         {
             throw new NotImplementedException();
         }

@@ -1,8 +1,8 @@
-﻿// <copyright file="JobHistorySection.cs" company="BJSS">
+﻿// <copyright file="JobHistorySectionDocument.cs" company="BJSS">
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Domain.Data.CvSections
+namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.JobHistory
 {
     using System;
     using System.Collections.Generic;
@@ -10,17 +10,17 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections
     using CurriculumVitaeBuilder.Domain.Data.CvSections.JobHistory;
 
     /// <summary>
-    /// Job History section.
+    /// Contact Section document.
     /// </summary>
-    public class JobHistorySection : CvSection
+    public class JobHistorySectionDocument : CvSectionDocument
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="JobHistorySection"/> class.
+        /// Initializes a new instance of the <see cref="JobHistorySectionDocument"/> class.
         /// </summary>
         /// <param name="id">The section identifier.</param>
         /// <param name="cvId">The CV identifier.</param>
         /// <param name="jobs">The collection of jobs.</param>
-        public JobHistorySection(
+        public JobHistorySectionDocument(
             Guid id,
             Guid cvId,
             IList<Job> jobs)

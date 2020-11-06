@@ -1,30 +1,32 @@
-﻿// <copyright file="SkillsProfileSection.cs" company="BJSS">
+﻿// <copyright file="SkillsProfileSectionDocument.cs" company="BJSS">
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Domain.Data.CvSections.SkillsProfile
+namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.SkillsProfile
 {
     using System;
     using System.Collections.Generic;
 
+    using CurriculumVitaeBuilder.Domain.Data.CvSections.SkillsProfile;
+
     /// <summary>
-    /// Skills Profile section.
+    /// Contact Section document.
     /// </summary>
-    public class SkillsProfileSection : CvSection
+    public class SkillsProfileSectionDocument : CvSectionDocument
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SkillsProfileSection"/> class.
+        /// Initializes a new instance of the <see cref="SkillsProfileSectionDocument"/> class.
         /// </summary>
         /// <param name="id">The section identifier.</param>
         /// <param name="cvId">The CV identifier.</param>
         /// <param name="skills">The collection of skills.</param>
-        public SkillsProfileSection(
+        public SkillsProfileSectionDocument(
             Guid id,
             Guid cvId,
             IList<Skill> skills)
             : base(id, cvId)
         {
-            this.Skills = skills
+            this.SKills = skills
                 ?? throw new ArgumentNullException(nameof(skills));
 
             this.Title = "Skills Profile";
@@ -33,7 +35,7 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections.SkillsProfile
         /// <summary>
         /// Gets the collection of skills.
         /// </summary>
-        public IList<Skill> Skills { get; }
+        public IList<Skill> SKills { get; }
 
         /// <summary>
         /// Gets or sets the Title.

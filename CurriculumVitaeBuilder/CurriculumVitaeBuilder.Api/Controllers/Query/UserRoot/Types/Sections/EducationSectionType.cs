@@ -1,18 +1,19 @@
-﻿// <copyright file="BioSectionType.cs" company="BJSS">
+﻿// <copyright file="EducationSectionType.cs" company="BJSS">
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
 namespace CurriculumVitaeBuilder.Api.Controllers.Query.UserRoot.Types.Sections
 {
     using System;
+    using System.Collections.Generic;
 
-    using CurriculumVitaeBuilder.Domain.Data.CvSections.Bio;
+    using CurriculumVitaeBuilder.Domain.Data.CvSections.Education;
 
     using GraphQL.Types;
 
-    public class BioSectionType : ObjectGraphType<BioSection>
+    public class EducationSectionType : ObjectGraphType<EducationSection>
     {
-        public BioSectionType()
+        public EducationSectionType()
         {
             this.Field<IdGraphType, Guid>("id")
                 .Description("The section identifier.")
@@ -26,13 +27,11 @@ namespace CurriculumVitaeBuilder.Api.Controllers.Query.UserRoot.Types.Sections
                 .Name("title")
                 .Description("The section title.");
 
-            this.Field(p => p.City)
-                .Name("city")
-                .Description("The city.");
-
-            this.Field(p => p.FullName)
-               .Name("fullName")
-               .Description("The full name.");
+            this.Field<
+                ListGraphType<EducationEstablishmentsType>,
+                IList<EducationEstablishment>?>("educationEstablishments")
+                .Description("The education establishments.")
+                .Resolve(context => context.Source.EducationEstablishments);
         }
     }
 }

@@ -22,11 +22,6 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections.SkillsProfile
             string description,
             DateTime? achievedAt)
         {
-            if (achievedAt == default)
-            {
-                throw new ArgumentException(nameof(achievedAt));
-            }
-
             if (name == default)
             {
                 throw new ArgumentException(nameof(name));

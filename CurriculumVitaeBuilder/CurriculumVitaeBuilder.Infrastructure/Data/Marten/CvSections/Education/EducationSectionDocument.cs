@@ -1,31 +1,33 @@
-﻿// <copyright file="EducationSection.cs" company="BJSS">
+﻿// <copyright file="EducationSectionDocument.cs" company="BJSS">
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Domain.Data.CvSections.Education
+namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Education
 {
     using System;
     using System.Collections.Generic;
 
+    using CurriculumVitaeBuilder.Domain.Data.CvSections.Education;
+
     /// <summary>
-    /// Education section.
+    /// Contact Section document.
     /// </summary>
-    public class EducationSection : CvSection
+    public class EducationSectionDocument : CvSectionDocument
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EducationSection"/> class.
+        /// Initializes a new instance of the <see cref="EducationSectionDocument"/> class.
         /// </summary>
         /// <param name="id">The section identifier.</param>
         /// <param name="cvId">The CV identifier.</param>
         /// <param name="educationEstablishments">The collection of education establishments.</param>
-        public EducationSection(
+        public EducationSectionDocument(
             Guid id,
             Guid cvId,
             IList<EducationEstablishment> educationEstablishments)
             : base(id, cvId)
         {
             this.EducationEstablishments = educationEstablishments
-                ?? throw new ArgumentNullException(nameof(educationEstablishments));
+                 ?? throw new ArgumentNullException(nameof(educationEstablishments));
 
             this.Title = "Education";
         }

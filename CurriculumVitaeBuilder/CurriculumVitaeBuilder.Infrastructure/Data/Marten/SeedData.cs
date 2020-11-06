@@ -7,8 +7,14 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
     using System;
     using System.Collections.Generic;
 
+    using CurriculumVitaeBuilder.Domain.Data.CvSections.Education;
+    using CurriculumVitaeBuilder.Domain.Data.CvSections.JobHistory;
+    using CurriculumVitaeBuilder.Domain.Data.CvSections.SkillsProfile;
     using CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio;
     using CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Contact;
+    using CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Education;
+    using CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.JobHistory;
+    using CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.SkillsProfile;
     using CurriculumVitaeBuilder.Infrastructure.Data.Marten.User;
 
     /// <summary>
@@ -66,6 +72,77 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
                     { "Email", "hello@hello.com" },
                     { "Phone", "07949155434" },
                     { "Website", "https://elliotmorris.dev" },
+                }),
+        };
+
+        /// <summary>
+        /// Seed data for education section documents.
+        /// </summary>
+        public static readonly EducationSectionDocument[]
+            EducationSectionDocuments =
+        {
+            new EducationSectionDocument(
+                Guid.Parse("dc1f0e7b-94c0-4572-ab7f-092cf36eb377"),
+                Guid.Parse("fc2bd26b-4dc4-4ad5-85b7-cbe23c2ed0db"),
+                new List<EducationEstablishment>()
+                {
+                    new EducationEstablishment(
+                        "The Joe Bloggs school",
+                        DateTime.Now.AddYears(-3).Date,
+                        DateTime.Now.AddYears(-1).Date),
+                }),
+        };
+
+        /// <summary>
+        /// Seed data for job history section documents.
+        /// </summary>
+        public static readonly JobHistorySectionDocument[]
+            JobHistorySectionDocuments =
+        {
+            new JobHistorySectionDocument(
+                Guid.Parse("972f401b-ceb8-4ac0-baf0-0d2f11044093"),
+                Guid.Parse("fc2bd26b-4dc4-4ad5-85b7-cbe23c2ed0db"),
+                new List<Job>()
+                {
+                    new Job(
+                        "BJSS",
+                        DateTime.Now.AddHours(-3).Date,
+                        DateTime.Now.Date,
+                        "Software Engineer",
+                        new List<string>()
+                        {
+                            "Build applications",
+                            "Write amazing code",
+                            "Impress clients",
+                        }),
+                }),
+        };
+
+        /// <summary>
+        /// Seed data for skils profile section documents.
+        /// </summary>
+        public static readonly SkillsProfileSectionDocument[]
+            SkillsProfileSectionDocuments =
+        {
+            new SkillsProfileSectionDocument(
+                Guid.Parse("d15f3334-f587-447d-b59a-c548ba7df2d0"),
+                Guid.Parse("fc2bd26b-4dc4-4ad5-85b7-cbe23c2ed0db"),
+                new List<Skill>()
+                {
+                    new Skill(
+                        "C#",
+                        "4 years experience in using C#",
+                        DateTime.Now.AddYears(-4).Date),
+
+                    new Skill(
+                        "JavaScript",
+                        "4 years experience in using JavaScript",
+                        DateTime.Now.AddYears(-4).Date),
+
+                    new Skill(
+                        "Go",
+                        "Less than a years experience using GO",
+                        null),
                 }),
         };
     }

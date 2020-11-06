@@ -61,7 +61,17 @@ namespace CurriculumVitaeBuilder.Api
             services.AddScoped<CvType>();
 
             services.AddScoped<BioSectionType>();
+
             services.AddScoped<ContactSectionType>();
+
+            services.AddScoped<EducationSectionType>();
+            services.AddScoped<EducationEstablishmentsType>();
+
+            services.AddScoped<JobHistorySectionType>();
+            services.AddScoped<JobType>();
+
+            services.AddScoped<SkillsProfileSectionType>();
+            services.AddScoped<SkillType>();
 
             return services;
         }

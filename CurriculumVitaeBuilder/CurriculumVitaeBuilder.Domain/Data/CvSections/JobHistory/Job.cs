@@ -25,7 +25,7 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections.JobHistory
             DateTime start,
             DateTime end,
             string jobTitle,
-            IReadOnlyCollection<string> duties)
+            IList<string> duties)
         {
             if (string.IsNullOrWhiteSpace(employer))
             {
@@ -79,6 +79,6 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections.JobHistory
         /// <summary>
         /// Gets the collection of duties.
         /// </summary>
-        public IReadOnlyCollection<string> Duties { get; }
+        public IList<string> Duties { get; }
     }
 }

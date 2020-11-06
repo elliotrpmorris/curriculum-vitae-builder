@@ -1,8 +1,8 @@
-﻿// <copyright file="MartenBioSectionStore.cs" company="BJSS">
+﻿// <copyright file="MartenEducationSectionStore.cs" company="BJSS">
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio
+namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Education
 {
     using System;
     using System.Collections.Generic;
@@ -10,21 +10,21 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio
     using System.Threading.Tasks;
 
     using CurriculumVitaeBuilder.Domain.Data.CvSections;
-    using CurriculumVitaeBuilder.Domain.Data.CvSections.Bio;
+    using CurriculumVitaeBuilder.Domain.Data.CvSections.Education;
 
     using global::Marten;
 
     /// <summary>
-    /// Marten Bio Section store.
+    /// Marten Contact Section store.
     /// </summary>
-    internal sealed class MartenBioSectionStore
-        : ICvSectionReader<BioSection>, ICvSectionWriter<BioSection>
+    internal sealed class MartenEducationSectionStore
+        : ICvSectionReader<EducationSection>, ICvSectionWriter<EducationSection>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MartenBioSectionStore"/> class.
+        /// Initializes a new instance of the <see cref="MartenEducationSectionStore"/> class.
         /// </summary>
         /// <param name="documentStoreFactory">The Document Store Factory.</param>
-        public MartenBioSectionStore(
+        public MartenEducationSectionStore(
             MartenDocumentStoreFactory documentStoreFactory)
         {
             this.DocumentStoreFactory = documentStoreFactory
@@ -38,52 +38,52 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio
         private DocumentStore DocumentStore { get; }
 
         /// <inheritdoc/>
-        public Task AddAsync(BioSection section)
+        public Task AddAsync(EducationSection section)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public Task DeleteAsync(BioSection section)
+        public Task DeleteAsync(EducationSection section)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public async Task<BioSection?> GetSectionByCvAsync(Guid cvId)
+        public async Task<EducationSection?> GetSectionByCvAsync(Guid cvId)
         {
             using var session = this.DocumentStore.LightweightSession();
 
             var section = await
                 session
-                    .Query<BioSectionDocument>()
+                    .Query<EducationSectionDocument>()
                     .FirstOrDefaultAsync(s => s.CvId == cvId);
 
-            return section.ToBioSection() ?? null;
+            return section.ToEducationSection() ?? null;
         }
 
         /// <inheritdoc/>
-        public async Task<IDictionary<Guid, BioSection>> GetSectionByCvAsync(
+        public async Task<IDictionary<Guid, EducationSection>> GetSectionByCvAsync(
             IReadOnlyCollection<Guid> cvIds)
         {
             using var session = this.DocumentStore.LightweightSession();
 
-            var bioSections = await
+            var sections = await
                 session
-                    .Query<BioSectionDocument>()
+                    .Query<EducationSectionDocument>()
                     .Where(s => s.CvId.In(cvIds.ToList()))
                     .ToListAsync();
 
-            if (bioSections == null)
+            if (sections == null)
             {
-                return new Dictionary<Guid, BioSection>();
+                return new Dictionary<Guid, EducationSection>();
             }
 
-            return bioSections.ToDictionary(x => x.CvId, x => x.ToBioSection());
+            return sections.ToDictionary(x => x.CvId, x => x.ToEducationSection());
         }
 
         /// <inheritdoc/>
-        public Task UpdateAsync(BioSection section)
+        public Task UpdateAsync(EducationSection section)
         {
             throw new NotImplementedException();
         }

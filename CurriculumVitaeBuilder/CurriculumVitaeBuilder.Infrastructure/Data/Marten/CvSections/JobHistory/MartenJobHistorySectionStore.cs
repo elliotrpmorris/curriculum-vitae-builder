@@ -1,8 +1,8 @@
-﻿// <copyright file="MartenBioSectionStore.cs" company="BJSS">
+﻿// <copyright file="MartenJobHistorySectionStore.cs" company="BJSS">
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio
+namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.JobHistory
 {
     using System;
     using System.Collections.Generic;
@@ -10,21 +10,20 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio
     using System.Threading.Tasks;
 
     using CurriculumVitaeBuilder.Domain.Data.CvSections;
-    using CurriculumVitaeBuilder.Domain.Data.CvSections.Bio;
 
     using global::Marten;
 
     /// <summary>
-    /// Marten Bio Section store.
+    /// Marten Contact Section store.
     /// </summary>
-    internal sealed class MartenBioSectionStore
-        : ICvSectionReader<BioSection>, ICvSectionWriter<BioSection>
+    internal sealed class MartenJobHistorySectionStore
+        : ICvSectionReader<JobHistorySection>, ICvSectionWriter<JobHistorySection>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MartenBioSectionStore"/> class.
+        /// Initializes a new instance of the <see cref="MartenJobHistorySectionStore"/> class.
         /// </summary>
         /// <param name="documentStoreFactory">The Document Store Factory.</param>
-        public MartenBioSectionStore(
+        public MartenJobHistorySectionStore(
             MartenDocumentStoreFactory documentStoreFactory)
         {
             this.DocumentStoreFactory = documentStoreFactory
@@ -38,52 +37,52 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio
         private DocumentStore DocumentStore { get; }
 
         /// <inheritdoc/>
-        public Task AddAsync(BioSection section)
+        public Task AddAsync(JobHistorySection section)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public Task DeleteAsync(BioSection section)
+        public Task DeleteAsync(JobHistorySection section)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public async Task<BioSection?> GetSectionByCvAsync(Guid cvId)
+        public async Task<JobHistorySection?> GetSectionByCvAsync(Guid cvId)
         {
             using var session = this.DocumentStore.LightweightSession();
 
             var section = await
                 session
-                    .Query<BioSectionDocument>()
+                    .Query<JobHistorySectionDocument>()
                     .FirstOrDefaultAsync(s => s.CvId == cvId);
 
-            return section.ToBioSection() ?? null;
+            return section.ToJobHistorySection() ?? null;
         }
 
         /// <inheritdoc/>
-        public async Task<IDictionary<Guid, BioSection>> GetSectionByCvAsync(
+        public async Task<IDictionary<Guid, JobHistorySection>> GetSectionByCvAsync(
             IReadOnlyCollection<Guid> cvIds)
         {
             using var session = this.DocumentStore.LightweightSession();
 
-            var bioSections = await
+            var sections = await
                 session
-                    .Query<BioSectionDocument>()
+                    .Query<JobHistorySectionDocument>()
                     .Where(s => s.CvId.In(cvIds.ToList()))
                     .ToListAsync();
 
-            if (bioSections == null)
+            if (sections == null)
             {
-                return new Dictionary<Guid, BioSection>();
+                return new Dictionary<Guid, JobHistorySection>();
             }
 
-            return bioSections.ToDictionary(x => x.CvId, x => x.ToBioSection());
+            return sections.ToDictionary(x => x.CvId, x => x.ToJobHistorySection());
         }
 
         /// <inheritdoc/>
-        public Task UpdateAsync(BioSection section)
+        public Task UpdateAsync(JobHistorySection section)
         {
             throw new NotImplementedException();
         }

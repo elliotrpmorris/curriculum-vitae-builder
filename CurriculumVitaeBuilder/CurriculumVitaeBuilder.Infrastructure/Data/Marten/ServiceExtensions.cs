@@ -8,9 +8,14 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
     using CurriculumVitaeBuilder.Domain.Data.CvSections;
     using CurriculumVitaeBuilder.Domain.Data.CvSections.Bio;
     using CurriculumVitaeBuilder.Domain.Data.CvSections.Contact;
+    using CurriculumVitaeBuilder.Domain.Data.CvSections.Education;
+    using CurriculumVitaeBuilder.Domain.Data.CvSections.SkillsProfile;
     using CurriculumVitaeBuilder.Domain.Data.User;
     using CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio;
     using CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Contact;
+    using CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Education;
+    using CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.JobHistory;
+    using CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.SkillsProfile;
     using CurriculumVitaeBuilder.Infrastructure.Data.Marten.User;
 
     using Microsoft.Extensions.DependencyInjection;
@@ -42,6 +47,18 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
             services
                 .AddScoped<ICvSectionReader<ContactSection>, MartenContactSectionStore>()
                 .AddScoped<ICvSectionWriter<ContactSection>, MartenContactSectionStore>();
+
+            services
+                .AddScoped<ICvSectionReader<EducationSection>, MartenEducationSectionStore>()
+                .AddScoped<ICvSectionWriter<EducationSection>, MartenEducationSectionStore>();
+
+            services
+                .AddScoped<ICvSectionReader<JobHistorySection>, MartenJobHistorySectionStore>()
+                .AddScoped<ICvSectionWriter<JobHistorySection>, MartenJobHistorySectionStore>();
+
+            services
+                .AddScoped<ICvSectionReader<SkillsProfileSection>, MartenSkillsProfileSectionStore>()
+                .AddScoped<ICvSectionWriter<SkillsProfileSection>, MartenSkillsProfileSectionStore>();
 
             return services;
         }
