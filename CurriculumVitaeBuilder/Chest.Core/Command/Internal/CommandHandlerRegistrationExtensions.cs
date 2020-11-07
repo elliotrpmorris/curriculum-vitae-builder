@@ -44,7 +44,7 @@ namespace Chest.Core.Command.Internal
             // Get all types that are command validator
             var validators =
                 types
-                    .Where(x => x.BaseType.Name == typeof(CommandValidator<>).Name)
+                    .Where(x => x.BaseType?.Name == typeof(CommandValidator<>).Name)
                     .ToArray();
 
             // Get all types that are command auth providers

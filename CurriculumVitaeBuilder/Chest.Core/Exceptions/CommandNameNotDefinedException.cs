@@ -6,6 +6,8 @@ namespace Chest.Core.Exceptions
 {
     using System;
 
+    using Chest.Core.Command;
+
     /// <summary>
     /// An exception that is thrown when trying to resolve a command name from
     /// the <see cref="CommandNameAttribute"/> when the attribute is not present.

@@ -26,7 +26,7 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.SkillsPro
             IList<Skill> skills)
             : base(id, cvId)
         {
-            this.SKills = skills
+            this.Skills = skills
                 ?? throw new ArgumentNullException(nameof(skills));
 
             this.Title = "Skills Profile";
@@ -35,7 +35,7 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.SkillsPro
         /// <summary>
         /// Gets the collection of skills.
         /// </summary>
-        public IList<Skill> SKills { get; }
+        public IList<Skill> Skills { get; }
 
         /// <summary>
         /// Gets or sets the Title.

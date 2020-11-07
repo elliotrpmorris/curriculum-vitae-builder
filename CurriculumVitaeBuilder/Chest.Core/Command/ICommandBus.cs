@@ -21,7 +21,6 @@ namespace Chest.Core.Command
         /// <param name="metadata">The command metadata.</param>
         /// <param name="validateOnly">Whether the command should be validated, or validated and executed.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        /// </exception>
         Task Send(
             JObject command,
             string commandName,

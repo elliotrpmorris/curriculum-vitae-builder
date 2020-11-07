@@ -12,6 +12,7 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.JobHistor
     using Chest.Core.Logging;
 
     using CurriculumVitaeBuilder.Domain.Data.CvSections;
+    using CurriculumVitaeBuilder.Domain.Data.CvSections.JobHistory;
 
     using global::Marten;
 
@@ -107,19 +108,55 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.JobHistor
         {
             using var session = this.DocumentStore.LightweightSession();
 
-            var exists = await
+            var sectionToUpdate = await
                 session
                     .Query<JobHistorySectionDocument>()
-                    .AnyAsync(s => s.CvId == section.CvId);
+                    .FirstOrDefaultAsync(s => s.CvId == section.CvId);
 
-            if (exists)
+            if (sectionToUpdate == null)
             {
                 Logger.LogInformation($"{section.Title} Section Doesn't exist for {section.CvId}");
 
                 return;
             }
 
-            session.Update(section.ToJobHistorySectionDocument());
+            foreach (var job in section.Jobs)
+            {
+                // Check if Job exists.
+                // We check against the employer and title as the user could have
+                // had more than one role within the same company.
+                var existingJobIndex =
+                    sectionToUpdate
+                        .Jobs
+                        .ToList()
+                        .FindIndex(i =>
+                            i.Employer.Equals(job.Employer) &&
+                            i.JobTitle.Equals(job.JobTitle));
+
+                if (existingJobIndex == -1)
+                {
+                    // Add if doesn't exist.
+                    sectionToUpdate.Jobs.Add(job);
+                }
+                else
+                {
+                    // Set to new updated properties if exists.
+                    sectionToUpdate
+                        .Jobs[existingJobIndex] =
+                            new Job(
+                                job.Employer,
+                                job.Start,
+                                job.End,
+                                job.JobTitle,
+                                this.UpdateDuties(
+                                    job.Duties.ToList(),
+                                    sectionToUpdate
+                                        .Jobs[existingJobIndex]
+                                        .Duties.ToList()));
+                }
+            }
+
+            session.Update(sectionToUpdate);
 
             await session.SaveChangesAsync();
         }
@@ -131,10 +168,22 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.JobHistor
 
             var exists = await
                 session
-                    .Query<JobHistorySection>()
+                    .Query<JobHistorySectionDocument>()
                     .AnyAsync(s => s.CvId == cvId);
 
             return exists;
+        }
+
+        private IList<string> UpdateDuties(List<string> newDuties, List<string> existingDuties)
+        {
+            // TODO: Investigate better way to do this :/
+            existingDuties
+                .AddRange(newDuties
+                    .Where((n) =>
+                        existingDuties.FindIndex((e) =>
+                            e == n) == -1));
+
+            return existingDuties;
         }
     }
 }

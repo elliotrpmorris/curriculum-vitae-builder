@@ -108,19 +108,45 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.SkillsPro
         {
             using var session = this.DocumentStore.LightweightSession();
 
-            var exists = await
-                session
-                    .Query<SkillsProfileSectionDocument>()
-                    .AnyAsync(s => s.CvId == section.CvId);
+            var sectionToUpdate = await
+                 session
+                     .Query<SkillsProfileSectionDocument>()
+                     .FirstOrDefaultAsync(s => s.CvId == section.CvId);
 
-            if (exists)
+            if (sectionToUpdate == null)
             {
                 Logger.LogInformation($"{section.Title} Section Doesn't exist for {section.CvId}");
 
                 return;
             }
 
-            session.Update(section.ToSkillsProfileSectionDocument());
+            foreach (var skill in section.Skills)
+            {
+                // Check if Skill exists.
+                var existingEstablishmentIndex =
+                    sectionToUpdate
+                        .Skills
+                        .ToList()
+                        .FindIndex(i => i.Name.Equals(skill.Name));
+
+                if (existingEstablishmentIndex == -1)
+                {
+                    // Add if doesn't exist.
+                    sectionToUpdate.Skills.Add(skill);
+                }
+                else
+                {
+                    // Set to new updated properties if exists.
+                    sectionToUpdate
+                        .Skills[existingEstablishmentIndex] =
+                            new Skill(
+                                skill.Name,
+                                skill.Description,
+                                skill.AchievedAt);
+                }
+            }
+
+            session.Update(sectionToUpdate);
 
             await session.SaveChangesAsync();
         }

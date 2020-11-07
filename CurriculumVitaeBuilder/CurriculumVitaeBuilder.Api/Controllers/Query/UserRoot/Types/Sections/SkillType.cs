@@ -22,7 +22,7 @@ namespace CurriculumVitaeBuilder.Api.Controllers.Query.UserRoot.Types.Sections
 
             this.Field<StringGraphType, string?>("achievdAt")
                 .Description("The time the skill was gained.")
-                .Resolve(context => context.Source.AchieveAt?.ToString("u"));
+                .Resolve(context => context.Source.AchievedAt?.ToString("u"));
         }
     }
 }

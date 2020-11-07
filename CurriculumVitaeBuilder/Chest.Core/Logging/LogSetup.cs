@@ -4,7 +4,6 @@
 
 namespace Chest.Core.Logging
 {
-
     using Microsoft.Extensions.Logging;
 
     /// <summary>

@@ -108,19 +108,45 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Education
         {
             using var session = this.DocumentStore.LightweightSession();
 
-            var exists = await
+            var sectionToUpdate = await
                 session
                     .Query<EducationSectionDocument>()
-                    .AnyAsync(s => s.CvId == section.CvId);
+                    .FirstOrDefaultAsync(s => s.CvId == section.CvId);
 
-            if (exists)
+            if (sectionToUpdate == null)
             {
                 Logger.LogInformation($"{section.Title} Section Doesn't exist for {section.CvId}");
 
                 return;
             }
 
-            session.Update(section.ToEducationSectionDocument());
+            foreach (var establishment in section.EducationEstablishments)
+            {
+                // Check if Education Establishment exists.
+                var existingEstablishmentIndex =
+                    sectionToUpdate
+                        .EducationEstablishments
+                        .ToList()
+                        .FindIndex(i => i.Name.Equals(establishment.Name));
+
+                if (existingEstablishmentIndex == -1)
+                {
+                    // Add if doesn't exist.
+                    sectionToUpdate.EducationEstablishments.Add(establishment);
+                }
+                else
+                {
+                    // Set to new updated properties if exists.
+                    sectionToUpdate
+                        .EducationEstablishments[existingEstablishmentIndex] =
+                            new EducationEstablishment(
+                                establishment.Name,
+                                establishment.Start,
+                                establishment.End);
+                }
+            }
+
+            session.Update(sectionToUpdate);
 
             await session.SaveChangesAsync();
         }

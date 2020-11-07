@@ -39,7 +39,12 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
                     .Query<CvDocument>()
                     .FirstOrDefaultAsync(c => c.UserId == userId);
 
-            return cv.ToBioSection() ?? null;
+            if (cv == null)
+            {
+                return null;
+            }
+
+            return cv.ToCV();
         }
     }
 }

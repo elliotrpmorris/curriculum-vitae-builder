@@ -26,7 +26,7 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Bio.Create
 
             this.RuleFor(x => x.City)
                 .NotEmpty()
-                .WithMessage("A city  must be provided");
+                .WithMessage("A city must be provided");
 
             this.RuleFor(x => x.FullName)
                 .NotEmpty()

@@ -2,7 +2,7 @@
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Api.Controllers.Command
+namespace Chest.Core.Command
 {
     using Newtonsoft.Json.Linq;
 

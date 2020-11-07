@@ -45,7 +45,7 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Bio.Delete
             {
                 throw new InvalidCommandException(
                     metadata.CommandName,
-                    typeof(DeleteBioSection).Name,
+                    typeof(DeleteBioSectionHandler).Name,
                     $"User Id must be set on the command.");
             }
 
@@ -53,7 +53,7 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Bio.Delete
             {
                 throw new InvalidCommandException(
                    metadata.CommandName,
-                   typeof(DeleteBioSection).Name,
+                   typeof(DeleteBioSectionHandler).Name,
                    $"CV Id must be set on the command.");
             }
 
@@ -64,7 +64,7 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Bio.Delete
             {
                 throw new InvalidCommandException(
                   metadata.CommandName,
-                  typeof(DeleteBioSection).Name,
+                  typeof(DeleteBioSectionHandler).Name,
                   $"CV section doesn't exists.");
             }
 

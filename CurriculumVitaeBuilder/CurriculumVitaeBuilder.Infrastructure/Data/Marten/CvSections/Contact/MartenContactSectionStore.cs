@@ -108,19 +108,34 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Contact
         {
             using var session = this.DocumentStore.LightweightSession();
 
-            var exists = await
+            var sectionToUpdate = await
                 session
                     .Query<ContactSectionDocument>()
-                    .AnyAsync(s => s.CvId == section.CvId);
+                    .FirstOrDefaultAsync(s => s.CvId == section.CvId);
 
-            if (exists)
+            if (sectionToUpdate == null)
             {
                 Logger.LogInformation($"{section.Title} Section Doesn't exist for {section.CvId}");
 
                 return;
             }
 
-            session.Update(section.ToContactSectionDocument());
+            foreach (var detail in section.ContactDetails)
+            {
+                // Contact detail exists but new value.
+                if (sectionToUpdate.ContactDetails.ContainsKey(detail.Key))
+                {
+                    // Update value to new value.
+                    sectionToUpdate.ContactDetails[detail.Key] = detail.Value;
+                }
+                else
+                {
+                    // New contact detail so try add.
+                    sectionToUpdate.ContactDetails.TryAdd(detail.Key, detail.Value);
+                }
+            }
+
+            session.Update(sectionToUpdate);
 
             await session.SaveChangesAsync();
         }

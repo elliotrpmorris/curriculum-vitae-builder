@@ -28,7 +28,7 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.SkillsPro
             return new SkillsProfileSection(
                 section.Id,
                 section.CvId,
-                section.SKills);
+                section.Skills);
         }
 
         /// <summary>

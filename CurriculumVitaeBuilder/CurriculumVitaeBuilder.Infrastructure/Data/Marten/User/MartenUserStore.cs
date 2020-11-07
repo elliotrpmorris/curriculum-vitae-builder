@@ -39,7 +39,12 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.User
                     .Query<UserDocument>()
                     .FirstOrDefaultAsync(u => u.Id == userId);
 
-            return user.ToUser() ?? null;
+            if (user == null)
+            {
+                return null;
+            }
+
+            return user.ToUser();
         }
     }
 }

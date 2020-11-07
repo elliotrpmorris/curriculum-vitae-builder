@@ -1,4 +1,8 @@
-﻿namespace Chest.Core.Exceptions
+﻿// <copyright file="CommandRegistrationException.cs" company="BJSS">
+// Copyright (c) BJSS. All rights reserved.
+// </copyright>
+
+namespace Chest.Core.Exceptions
 {
     using System;
 

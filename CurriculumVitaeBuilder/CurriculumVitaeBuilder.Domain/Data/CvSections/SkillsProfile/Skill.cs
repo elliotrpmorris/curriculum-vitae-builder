@@ -34,7 +34,7 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections.SkillsProfile
 
             this.Name = name;
             this.Description = description;
-            this.AchieveAt = achievedAt;
+            this.AchievedAt = achievedAt;
         }
 
         /// <summary>
@@ -50,6 +50,6 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections.SkillsProfile
         /// <summary>
         /// Gets the optional achieved at date.
         /// </summary>
-        public DateTime? AchieveAt { get; }
+        public DateTime? AchievedAt { get; }
     }
 }

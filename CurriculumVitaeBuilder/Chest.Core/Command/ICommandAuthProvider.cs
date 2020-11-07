@@ -2,10 +2,10 @@
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-using System.Threading.Tasks;
-
 namespace Chest.Core.Command
 {
+    using System.Threading.Tasks;
+
     /// <summary>
     /// The command authorization provider.
     /// </summary>
