@@ -7,6 +7,8 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
     using System;
     using System.Threading.Tasks;
 
+    using Chest.Core.Logging;
+
     using CurriculumVitaeBuilder.Domain.Data;
 
     using global::Marten;
@@ -14,7 +16,9 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
     /// <summary>
     /// Marten CV store.
     /// </summary>
-    internal sealed class MartenCvStore : ICvReader
+    internal sealed class MartenCvStore :
+        ICvReader,
+        ICvWriter
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MartenCvStore"/> class.
@@ -28,6 +32,26 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
         }
 
         private IDocumentStore DocumentStore { get; }
+
+        /// <inheritdoc/>
+        public async Task AddAsync(Cv cv)
+        {
+            using var session = this.DocumentStore.LightweightSession();
+
+            var exists = await
+                session.Query<CvDocument>().AnyAsync(s => s.UserId == cv.UserId);
+
+            if (exists)
+            {
+                Logger.LogInformation($"CV Already exists for {cv.UserId}");
+
+                return;
+            }
+
+            session.Store(cv.ToCvDocument());
+
+            await session.SaveChangesAsync();
+        }
 
         /// <inheritdoc/>
         public async Task<Cv?> GetCvByUserAsync(Guid userId)

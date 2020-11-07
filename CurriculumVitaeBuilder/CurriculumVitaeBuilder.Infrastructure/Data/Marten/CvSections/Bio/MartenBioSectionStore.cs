@@ -108,12 +108,6 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio
         {
             using var session = this.DocumentStore.LightweightSession();
 
-            var x = await
-               session
-                   .Query<BioSectionDocument>()
-                   .Where(x => x.CvId == cvId)
-                   .ToListAsync();
-
             var exists = await
                 session
                     .Query<BioSectionDocument>()

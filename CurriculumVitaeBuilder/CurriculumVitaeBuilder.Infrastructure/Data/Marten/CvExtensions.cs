@@ -29,5 +29,22 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
                 cv.Id,
                 cv.UserId);
         }
+
+        /// <summary>
+        /// Convert Document to Data Object to Document.
+        /// </summary>
+        /// <param name="cv">The CV.</param>
+        /// <returns>The Data Object.</returns>
+        public static CvDocument ToCvDocument(this Cv cv)
+        {
+            if (cv == null)
+            {
+                throw new ArgumentNullException(nameof(cv));
+            }
+
+            return new CvDocument(
+               cv.Id,
+               cv.UserId);
+        }
     }
 }

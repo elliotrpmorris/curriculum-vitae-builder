@@ -35,7 +35,7 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections
         /// Gets the section by CV identifier.
         /// </summary>
         /// <param name="cvId">The CV identifier.</param>
-        /// <returns>The section.</returns>
+        /// <returns>Whether the section exists or not.</returns>
         public Task<bool> GetSectionExistsAsync(
             Guid cvId);
     }

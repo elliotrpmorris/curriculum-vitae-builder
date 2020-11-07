@@ -93,10 +93,13 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
                        _.InitialData.Add(new SeedDataSetup(SeedData.SkillsProfileSectionDocuments));
                    }));
 
-            services.AddTransient<IUserReader, MartenUserStore>();
+            services
+                .AddTransient<IUserReader, MartenUserStore>()
+                .AddTransient<IUserWriter, MartenUserStore>();
 
             services
-                .AddTransient<ICvReader, MartenCvStore>();
+                .AddTransient<ICvReader, MartenCvStore>()
+                .AddTransient<ICvWriter, MartenCvStore>();
 
             services
                 .AddTransient<ICvSectionReader<BioSection>, MartenBioSectionStore>()

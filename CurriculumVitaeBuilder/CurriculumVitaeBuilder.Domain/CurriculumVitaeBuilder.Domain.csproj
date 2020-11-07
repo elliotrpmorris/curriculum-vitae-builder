@@ -22,11 +22,4 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Chest.Core\Chest.Core.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Command\Cv\Create\" />
-	  <Folder Include="Command\Cv\Delete\" />
-	  <Folder Include="Command\User\Create\" />
-	  <Folder Include="Command\User\Delete\" />
-	</ItemGroup>
 </Project>
