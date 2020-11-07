@@ -70,5 +70,18 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
 
             return cv.ToCV();
         }
+
+        /// <inheritdoc/>
+        public async Task<bool> GetCvExistsAsync(Guid cvId)
+        {
+            using var session = this.DocumentStore.LightweightSession();
+
+            var exists = await
+                session
+                    .Query<CvDocument>()
+                    .AnyAsync(s => s.Id == cvId);
+
+            return exists;
+        }
     }
 }

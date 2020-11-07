@@ -10,6 +10,7 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Contact.Update
     using Chest.Core.Command;
     using Chest.Core.Exceptions;
 
+    using CurriculumVitaeBuilder.Domain.Data;
     using CurriculumVitaeBuilder.Domain.Data.CvSections;
     using CurriculumVitaeBuilder.Domain.Data.CvSections.Contact;
 
@@ -23,38 +24,40 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Contact.Update
         /// </summary>
         /// <param name="cvSectionReader">The CV section reader.</param>
         /// <param name="cvSectionWriter">The CV section writer.</param>
+        /// <param name="cvReader">The CV reader.</param>
         public UpdateContactSectionHandler(
             ICvSectionReader<ContactSection> cvSectionReader,
-            ICvSectionWriter<ContactSection> cvSectionWriter)
+            ICvSectionWriter<ContactSection> cvSectionWriter,
+            ICvReader cvReader)
         {
             this.CvSectionReader = cvSectionReader
                 ?? throw new ArgumentNullException(nameof(cvSectionReader));
 
             this.CvSectionWriter = cvSectionWriter
                 ?? throw new ArgumentNullException(nameof(cvSectionWriter));
+
+            this.CvReader = cvReader
+               ?? throw new ArgumentNullException(nameof(cvReader));
         }
 
         private ICvSectionReader<ContactSection> CvSectionReader { get; }
 
         private ICvSectionWriter<ContactSection> CvSectionWriter { get; }
 
+        private ICvReader CvReader { get; }
+
         /// <inheritdoc/>
         public async Task Handle(UpdateContactSection command, CommandMetadata metadata)
         {
-            if (command.UserId == default)
-            {
-                throw new InvalidCommandException(
-                    metadata.CommandName,
-                    typeof(UpdateContactSection).Name,
-                    $"User Id must be set on the command.");
-            }
+            var cvExists = await
+               this.CvReader.GetCvExistsAsync(command.CvId);
 
-            if (command.CvId == default)
+            if (!cvExists)
             {
                 throw new InvalidCommandException(
-                   metadata.CommandName,
-                   typeof(UpdateContactSection).Name,
-                   $"CV Id must be set on the command.");
+                  metadata.CommandName,
+                  typeof(UpdateContactSection).Name,
+                  $"CV does not exist for user: {command.UserId}.");
             }
 
             var section = await

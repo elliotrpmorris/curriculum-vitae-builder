@@ -1,4 +1,4 @@
-﻿// <copyright file="ContactSectionTests.cs" company="BJSS">
+﻿// <copyright file="EducationSectionTests.cs" company="BJSS">
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
@@ -7,48 +7,48 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Data.CvSections
     using System;
     using System.Collections.Generic;
 
-    using CurriculumVitaeBuilder.Domain.Data.CvSections.Contact;
+    using CurriculumVitaeBuilder.Domain.Data.CvSections.Education;
 
     using Xunit;
 
-    public class ContactSectionTests
+    public class EducationSectionTests
     {
         [Fact]
         public void Constructor_Id_ThrowsArgumentException()
         {
             var id = Guid.Empty;
-            var details = new Dictionary<string, string>();
+            var educationEstablishments = new List<EducationEstablishment>();
 
             Assert.Throws<ArgumentException>(() =>
-                new ContactSection(
+                new EducationSection(
                     id,
                     Guid.NewGuid(),
-                    details));
+                    educationEstablishments));
         }
 
         [Fact]
         public void Constructor_CvId_ThrowsArgumentException()
         {
             var cvId = Guid.Empty;
-            var details = new Dictionary<string, string>();
+            var educationEstablishments = new List<EducationEstablishment>();
 
             Assert.Throws<ArgumentException>(() =>
-                new ContactSection(
+                new EducationSection(
                     Guid.NewGuid(),
                     cvId,
-                    details));
+                    educationEstablishments));
         }
 
         [Fact]
-        public void Constructor_ConactDetails_ThrowsArgumentNullException()
+        public void Constructor_InvalidEducationEstablishment_ThrowsArgumentNullException()
         {
-            Dictionary<string, string>? details = null;
+            List<EducationEstablishment>? educationEstablishments = null;
 
             Assert.Throws<ArgumentNullException>(() =>
-                new ContactSection(
+                new EducationSection(
                     Guid.NewGuid(),
                     Guid.NewGuid(),
-                    details!));
+                    educationEstablishments!));
         }
 
         [Fact]
@@ -57,17 +57,17 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Data.CvSections
             // Arrange / Act
             var id = Guid.NewGuid();
             var cvId = Guid.NewGuid();
-            var details = new Dictionary<string, string>();
+            var educationEstablishments = new List<EducationEstablishment>();
 
-            var ret = new ContactSection(
+            var ret = new EducationSection(
                     id,
                     cvId,
-                    details);
+                    educationEstablishments);
 
             // Assert
             Assert.Equal(id, ret.Id);
             Assert.Equal(cvId, ret.CvId);
-            Assert.Equal(details, ret.ContactDetails);
+            Assert.Equal(educationEstablishments, ret.EducationEstablishments);
         }
     }
 }

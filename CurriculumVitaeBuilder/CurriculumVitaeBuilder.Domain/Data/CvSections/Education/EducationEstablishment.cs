@@ -37,6 +37,11 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections.Education
                 throw new ArgumentException(nameof(end));
             }
 
+            if (start > end)
+            {
+                throw new ArgumentException("Start cant be greater than end");
+            }
+
             this.Name = name;
             this.Start = start;
             this.End = end;

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -29,6 +29,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CurriculumVitaeBuilder.Domain\CurriculumVitaeBuilder.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Command\CvSections\Bio\Delete\" />
+    <Folder Include="Command\CvSections\Bio\Update\" />
   </ItemGroup>
 
 </Project>

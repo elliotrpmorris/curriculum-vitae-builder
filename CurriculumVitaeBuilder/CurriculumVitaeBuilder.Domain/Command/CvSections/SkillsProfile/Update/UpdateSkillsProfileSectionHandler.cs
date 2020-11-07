@@ -5,12 +5,12 @@
 namespace CurriculumVitaeBuilder.Domain.Command.CvSections.SkillsProfile.Update
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Chest.Core.Command;
     using Chest.Core.Exceptions;
 
+    using CurriculumVitaeBuilder.Domain.Data;
     using CurriculumVitaeBuilder.Domain.Data.CvSections;
     using CurriculumVitaeBuilder.Domain.Data.CvSections.SkillsProfile;
 
@@ -24,38 +24,40 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.SkillsProfile.Update
         /// </summary>
         /// <param name="cvSectionReader">The CV section reader.</param>
         /// <param name="cvSectionWriter">The CV section writer.</param>
+        /// <param name="cvReader">The CV reader.</param>
         public UpdateSkillsProfileSectionHandler(
             ICvSectionReader<SkillsProfileSection> cvSectionReader,
-            ICvSectionWriter<SkillsProfileSection> cvSectionWriter)
+            ICvSectionWriter<SkillsProfileSection> cvSectionWriter,
+            ICvReader cvReader)
         {
             this.CvSectionReader = cvSectionReader
                 ?? throw new ArgumentNullException(nameof(cvSectionReader));
 
             this.CvSectionWriter = cvSectionWriter
                 ?? throw new ArgumentNullException(nameof(cvSectionWriter));
+
+            this.CvReader = cvReader
+                ?? throw new ArgumentNullException(nameof(cvReader));
         }
 
         private ICvSectionReader<SkillsProfileSection> CvSectionReader { get; }
 
         private ICvSectionWriter<SkillsProfileSection> CvSectionWriter { get; }
 
+        private ICvReader CvReader { get; }
+
         /// <inheritdoc/>
         public async Task Handle(UpdateSkillsProfileSection command, CommandMetadata metadata)
         {
-            if (command.UserId == default)
-            {
-                throw new InvalidCommandException(
-                    metadata.CommandName,
-                    typeof(UpdateSkillsProfileSection).Name,
-                    $"User Id must be set on the command.");
-            }
+            var cvExists = await
+               this.CvReader.GetCvExistsAsync(command.CvId);
 
-            if (command.CvId == default)
+            if (!cvExists)
             {
                 throw new InvalidCommandException(
-                   metadata.CommandName,
-                   typeof(UpdateSkillsProfileSection).Name,
-                   $"CV Id must be set on the command.");
+                  metadata.CommandName,
+                  typeof(UpdateSkillsProfileSection).Name,
+                  $"CV does not exist for user: {command.UserId}.");
             }
 
             var section = await

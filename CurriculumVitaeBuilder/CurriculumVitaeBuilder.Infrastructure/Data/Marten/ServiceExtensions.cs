@@ -78,20 +78,19 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
 
                            // Section Types.
                            .AddSubClass(typeof(BioSectionDocument))
+
                            .AddSubClass(typeof(ContactSectionDocument))
                            .AddSubClass(typeof(EducationSectionDocument))
                            .AddSubClass(typeof(JobHistorySectionDocument))
                            .AddSubClass(typeof(SkillsProfileSectionDocument));
 
                        // Seed data.
-                       _.InitialData.Clear();
+                       // Please note these are used for demo purpose only.
                        _.InitialData.Add(new SeedDataSetup(SeedData.UserDocuments));
                        _.InitialData.Add(new SeedDataSetup(SeedData.CvDocuments));
                        _.InitialData.Add(new SeedDataSetup(SeedData.ContactSectionDocuments));
                        _.InitialData.Add(new SeedDataSetup(SeedData.BioSectionDocuments));
                        _.InitialData.Add(new SeedDataSetup(SeedData.EducationSectionDocuments));
-                       _.InitialData.Add(new SeedDataSetup(SeedData.JobHistorySectionDocuments));
-                       _.InitialData.Add(new SeedDataSetup(SeedData.SkillsProfileSectionDocuments));
                    }));
 
             services

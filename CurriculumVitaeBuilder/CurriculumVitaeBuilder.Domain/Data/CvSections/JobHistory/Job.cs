@@ -41,9 +41,19 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections.JobHistory
                 throw new ArgumentException(nameof(end));
             }
 
+            if (start > end)
+            {
+                throw new ArgumentException("Start cant be greater than end");
+            }
+
             if (string.IsNullOrWhiteSpace(jobTitle))
             {
                 throw new ArgumentException(nameof(jobTitle));
+            }
+
+            if (string.IsNullOrWhiteSpace(description))
+            {
+                throw new ArgumentException(nameof(description));
             }
 
             this.Employer = employer;

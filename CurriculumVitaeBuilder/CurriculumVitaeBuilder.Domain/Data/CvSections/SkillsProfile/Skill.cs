@@ -22,7 +22,7 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections.SkillsProfile
             string description,
             DateTime? achievedAt)
         {
-            if (name == default)
+            if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException(nameof(name));
             }

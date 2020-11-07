@@ -1,4 +1,4 @@
-﻿// <copyright file="ContactSectionTests.cs" company="BJSS">
+﻿// <copyright file="JobHistorySectionTests.cs" company="BJSS">
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
@@ -7,48 +7,49 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Data.CvSections
     using System;
     using System.Collections.Generic;
 
-    using CurriculumVitaeBuilder.Domain.Data.CvSections.Contact;
+    using CurriculumVitaeBuilder.Domain.Data.CvSections;
+    using CurriculumVitaeBuilder.Domain.Data.CvSections.JobHistory;
 
     using Xunit;
 
-    public class ContactSectionTests
+    public class JobHistorySectionTests
     {
         [Fact]
         public void Constructor_Id_ThrowsArgumentException()
         {
             var id = Guid.Empty;
-            var details = new Dictionary<string, string>();
+            var jobs = new List<Job>();
 
             Assert.Throws<ArgumentException>(() =>
-                new ContactSection(
+                new JobHistorySection(
                     id,
                     Guid.NewGuid(),
-                    details));
+                    jobs));
         }
 
         [Fact]
         public void Constructor_CvId_ThrowsArgumentException()
         {
             var cvId = Guid.Empty;
-            var details = new Dictionary<string, string>();
+            var jobs = new List<Job>();
 
             Assert.Throws<ArgumentException>(() =>
-                new ContactSection(
+                new JobHistorySection(
                     Guid.NewGuid(),
                     cvId,
-                    details));
+                    jobs));
         }
 
         [Fact]
-        public void Constructor_ConactDetails_ThrowsArgumentNullException()
+        public void Constructor_IvalidJobs_ThrowsArgumentNullException()
         {
-            Dictionary<string, string>? details = null;
+            List<Job>? jobs = null;
 
             Assert.Throws<ArgumentNullException>(() =>
-                new ContactSection(
+                new JobHistorySection(
                     Guid.NewGuid(),
                     Guid.NewGuid(),
-                    details!));
+                    jobs!));
         }
 
         [Fact]
@@ -57,17 +58,17 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Data.CvSections
             // Arrange / Act
             var id = Guid.NewGuid();
             var cvId = Guid.NewGuid();
-            var details = new Dictionary<string, string>();
+            var job = new List<Job>();
 
-            var ret = new ContactSection(
+            var ret = new JobHistorySection(
                     id,
                     cvId,
-                    details);
+                    job);
 
             // Assert
             Assert.Equal(id, ret.Id);
             Assert.Equal(cvId, ret.CvId);
-            Assert.Equal(details, ret.ContactDetails);
+            Assert.Equal(job, ret.Jobs);
         }
     }
 }

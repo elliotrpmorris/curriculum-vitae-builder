@@ -10,6 +10,7 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Bio.Create
     using Chest.Core.Command;
     using Chest.Core.Exceptions;
 
+    using CurriculumVitaeBuilder.Domain.Data;
     using CurriculumVitaeBuilder.Domain.Data.CvSections;
     using CurriculumVitaeBuilder.Domain.Data.CvSections.Bio;
 
@@ -23,49 +24,51 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Bio.Create
         /// </summary>
         /// <param name="cvSectionReader">The CV section reader.</param>
         /// <param name="cvSectionWriter">The CV section writer.</param>
+        /// <param name="cvReader">The CV reader.</param>
         public CreateBioSectionHandler(
             ICvSectionReader<BioSection> cvSectionReader,
-            ICvSectionWriter<BioSection> cvSectionWriter)
+            ICvSectionWriter<BioSection> cvSectionWriter,
+            ICvReader cvReader)
         {
             this.CvSectionReader = cvSectionReader
                 ?? throw new ArgumentNullException(nameof(cvSectionReader));
 
             this.CvSectionWriter = cvSectionWriter
                 ?? throw new ArgumentNullException(nameof(cvSectionWriter));
+
+            this.CvReader = cvReader
+                ?? throw new ArgumentNullException(nameof(cvReader));
         }
 
         private ICvSectionReader<BioSection> CvSectionReader { get; }
 
         private ICvSectionWriter<BioSection> CvSectionWriter { get; }
 
+        private ICvReader CvReader { get; }
+
         /// <inheritdoc/>
         public async Task Handle(CreateBioSection command, CommandMetadata metadata)
         {
-            if (command.UserId == default)
-            {
-                throw new InvalidCommandException(
-                    metadata.CommandName,
-                    typeof(CreateBioSection).Name,
-                    $"User Id must be set on the command.");
-            }
+            var cvExists = await
+                this.CvReader.GetCvExistsAsync(command.CvId);
 
-            if (command.CvId == default)
-            {
-                throw new InvalidCommandException(
-                   metadata.CommandName,
-                   typeof(CreateBioSection).Name,
-                   $"CV Id must be set on the command.");
-            }
-
-            var exists = await
-                this.CvSectionReader.GetSectionExistsAsync(command.CvId);
-
-            if (exists)
+            if (!cvExists)
             {
                 throw new InvalidCommandException(
                   metadata.CommandName,
                   typeof(CreateBioSection).Name,
-                  $"CV section already exists.");
+                  $"CV does not exist for user: {command.UserId}.");
+            }
+
+            var sectionExists = await
+                this.CvSectionReader.GetSectionExistsAsync(command.CvId);
+
+            if (sectionExists)
+            {
+                throw new InvalidCommandException(
+                  metadata.CommandName,
+                  typeof(CreateBioSection).Name,
+                  "CV section already exists.");
             }
 
             await this.CvSectionWriter.AddAsync(

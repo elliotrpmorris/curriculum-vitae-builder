@@ -10,6 +10,7 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.SkillsProfile.Create
     using Chest.Core.Command;
     using Chest.Core.Exceptions;
 
+    using CurriculumVitaeBuilder.Domain.Data;
     using CurriculumVitaeBuilder.Domain.Data.CvSections;
     using CurriculumVitaeBuilder.Domain.Data.CvSections.SkillsProfile;
 
@@ -23,38 +24,40 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.SkillsProfile.Create
         /// </summary>
         /// <param name="cvSectionReader">The CV section reader.</param>
         /// <param name="cvSectionWriter">The CV section writer.</param>
+        /// <param name="cvReader">The CV reader.</param>
         public CreateSkillsProfileSectionHandler(
             ICvSectionReader<SkillsProfileSection> cvSectionReader,
-            ICvSectionWriter<SkillsProfileSection> cvSectionWriter)
+            ICvSectionWriter<SkillsProfileSection> cvSectionWriter,
+            ICvReader cvReader)
         {
             this.CvSectionReader = cvSectionReader
                 ?? throw new ArgumentNullException(nameof(cvSectionReader));
 
             this.CvSectionWriter = cvSectionWriter
                 ?? throw new ArgumentNullException(nameof(cvSectionWriter));
+
+            this.CvReader = cvReader
+               ?? throw new ArgumentNullException(nameof(cvReader));
         }
 
         private ICvSectionReader<SkillsProfileSection> CvSectionReader { get; }
 
         private ICvSectionWriter<SkillsProfileSection> CvSectionWriter { get; }
 
+        private ICvReader CvReader { get; }
+
         /// <inheritdoc/>
         public async Task Handle(CreateSkillsProfileSection command, CommandMetadata metadata)
         {
-            if (command.UserId == default)
-            {
-                throw new InvalidCommandException(
-                    metadata.CommandName,
-                    typeof(CreateSkillsProfileSection).Name,
-                    $"User Id must be set on the command.");
-            }
+            var cvExists = await
+                this.CvReader.GetCvExistsAsync(command.CvId);
 
-            if (command.CvId == default)
+            if (!cvExists)
             {
                 throw new InvalidCommandException(
-                   metadata.CommandName,
-                   typeof(CreateSkillsProfileSection).Name,
-                   $"CV Id must be set on the command.");
+                  metadata.CommandName,
+                  typeof(CreateSkillsProfileSection).Name,
+                  $"CV does not exist for user: {command.UserId}.");
             }
 
             var exists = await

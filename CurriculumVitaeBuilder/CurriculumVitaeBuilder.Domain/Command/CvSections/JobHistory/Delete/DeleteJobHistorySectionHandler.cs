@@ -10,6 +10,7 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.JobHistory.Delete
     using Chest.Core.Command;
     using Chest.Core.Exceptions;
 
+    using CurriculumVitaeBuilder.Domain.Data;
     using CurriculumVitaeBuilder.Domain.Data.CvSections;
 
     /// <summary>
@@ -22,38 +23,40 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.JobHistory.Delete
         /// </summary>
         /// <param name="cvSectionReader">The CV section reader.</param>
         /// <param name="cvSectionWriter">The CV section writer.</param>
+        /// <param name="cvReader">The CV reader.</param>
         public DeleteJobHistorySectionHandler(
             ICvSectionReader<JobHistorySection> cvSectionReader,
-            ICvSectionWriter<JobHistorySection> cvSectionWriter)
+            ICvSectionWriter<JobHistorySection> cvSectionWriter,
+            ICvReader cvReader)
         {
             this.CvSectionReader = cvSectionReader
                 ?? throw new ArgumentNullException(nameof(cvSectionReader));
 
             this.CvSectionWriter = cvSectionWriter
                 ?? throw new ArgumentNullException(nameof(cvSectionWriter));
+
+            this.CvReader = cvReader
+                ?? throw new ArgumentNullException(nameof(cvReader));
         }
 
         private ICvSectionReader<JobHistorySection> CvSectionReader { get; }
 
         private ICvSectionWriter<JobHistorySection> CvSectionWriter { get; }
 
+        private ICvReader CvReader { get; }
+
         /// <inheritdoc/>
         public async Task Handle(DeleteJobHistorySection command, CommandMetadata metadata)
         {
-            if (command.UserId == default)
-            {
-                throw new InvalidCommandException(
-                    metadata.CommandName,
-                    typeof(DeleteJobHistorySection).Name,
-                    $"User Id must be set on the command.");
-            }
+            var cvExists = await
+                this.CvReader.GetCvExistsAsync(command.CvId);
 
-            if (command.CvId == default)
+            if (!cvExists)
             {
                 throw new InvalidCommandException(
-                   metadata.CommandName,
-                   typeof(DeleteJobHistorySection).Name,
-                   $"CV Id must be set on the command.");
+                  metadata.CommandName,
+                  typeof(DeleteJobHistorySection).Name,
+                  $"CV does not exist for user: {command.UserId}.");
             }
 
             var section = await
