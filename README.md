@@ -62,6 +62,8 @@ Each section has a command for creating, updating, and deleting and any nested o
 
 3. This will populated your envrioment with all availble commands and a some example GraphQL requests the first showing a Cv generated with the seed data. 
 
+In the root folder i have add some images of what some example requests look like.
+
 Set up without importing the insomnia request guide below.
 
 ### Querying the API 
