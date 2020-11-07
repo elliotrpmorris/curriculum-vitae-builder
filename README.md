@@ -22,7 +22,7 @@ To get the Curriculum Vitae Builder service up and running locally on your machi
     docker-compose up
     ```
 
-    This should start setting up all of the programs in a container that are needed for the Curriculum Vitae Builder service to function, once this is done, move onto the next step.
+    This will run postgres and pgadmin.
 
 2. In a browser, navigate to the localhost:7070 to open pgAdmin, now login using the credentials specified in the dockerfile. In this case it should be the following:
 
@@ -50,7 +50,19 @@ To get the Curriculum Vitae Builder service up and running locally on your machi
 
     Once this is done, press save.
 
-6. Once you run the API project the DB will buto auto created and seeded with some data use the below query to view whats there!
+5. Now run the API project and when you send your first query the DB will auto create and seed with some data.
+
+## Testing the application
+
+Each section has a command for creating, updating, and deleting and any nested objects also have their own delete command. These nested objects can be created and updated on their corresponding section.
+
+1. Open insomnia at the top left click `Application` then `Preferences` then click the `Data` tab. 
+
+2. Click `Import data` then `from file` navigate to the root folder of `curriculum-vitae-builder` and select the `Insomnia_Requests.json`
+
+3. This will populated your envrioment with all availble commands and a some example GraphQL requests the first showing a Cv generated with the seed data. 
+
+Below is instrucations if you dont import the requests.
 
 ## Querying the API 
  (Please note this example will be using Insomia but you can also query this using other tools for example Postman is a popular API client)
@@ -122,5 +134,21 @@ query {
 ## Sending Commands to the API 
 (Please note this example will be using Insomia but you can also query this using other tools for example Postman is a popular API client)
 
-1.
+ 1. Open Insomnia. Click the plus and New Request this can be called anything. But make sure the type is `POST`
+ 
+ 2. On the Body drop down then click Json. 
+ 
+ 3. For the url enter `http://localhost:5000/command` 
+ Below is an example request body for add user command
+ 
+ ```
+ {
+	"command": "USER/CREATE",
+	"body": {
+		"userName": "elliot",
+	}
+}
+ ```
+
+
  
