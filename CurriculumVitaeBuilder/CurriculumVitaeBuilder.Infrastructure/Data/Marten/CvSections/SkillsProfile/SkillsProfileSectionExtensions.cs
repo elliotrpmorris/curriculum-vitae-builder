@@ -34,8 +34,8 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.SkillsPro
         /// <summary>
         /// Convert Document to Data Object to Document.
         /// </summary>
-        /// <param name="section">The Data Object.</param>
-        /// <returns>The Gateway Data Object.</returns>
+        /// <param name="section">The Section.</param>
+        /// <returns>The Data Object.</returns>
         public static SkillsProfileSectionDocument ToSkillsProfileSectionDocument(this SkillsProfileSection section)
         {
             if (section == null)

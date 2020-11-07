@@ -50,20 +50,17 @@ To get the Curriculum Vitae Builder service up and running locally on your machi
 
     Once this is done, press save.
 
-5. Once the server has been created you will need to create the Curriculum Vitae Builder database, to do this, expand the list of servers in the top left of the window. You should now see the server you have just created, expand that server, right click on the Databases section and follow Create -> Database, this will open up another modal. In the General tab, set the Database field to:
-
-    ```
-    curriculum_vitae_builder
-    ```
-     and press save.
-
-6. Setting up the server and database should now be complete, all you need to do now is run the API.
+6. Once you run the API project the DB will buto auto created and seeded with some data use the below query to view whats there!
 
 ## Querying the API 
- Please note this example will be using Insomia but you can also query this using other tools for example Postman is a popular API client
+ (Please note this example will be using Insomia but you can also query this using other tools for example Postman is a popular API client)
  
- 1. Open Insomnia Create a Get Request on the Body drop down click GraphQL Query for the url enter `http://localhost:5000/query`
-  To view the full CV put this as your request 
+ 1. Open Insomnia. Click the plus and New Request this can be called anything. But make sure the type is `POST`
+ 
+ 2. On the Body drop down then click GraphQL Query. 
+ 
+ 3. For the url enter `http://localhost:5000/query`
+  
 ```
 query {
   user(userId: "3f169b60-3d10-4beb-b6f9-3bfe2e4e5526") {
@@ -113,4 +110,17 @@ query {
 ```
 
 2. Hit send and see the graph appear!
+
+ The above query will display a users CV and its sections.
+  
+  Since this API uses GraphQL you can ask for as little or as much as you want of the CV for example if you just wanted the bio and contact sections you can emit the rest of the query.
+  
+  You can also view the documentation inside Insomina to see what fields are avalible there. 
+  
+  Having a GraphQL API is super powerful as it  allows you to easily create complex querys. Aslong as its on the graph are there you can query it!
+
+## Sending Commands to the API 
+(Please note this example will be using Insomia but you can also query this using other tools for example Postman is a popular API client)
+
+1.
  

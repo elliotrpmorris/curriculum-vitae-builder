@@ -16,7 +16,7 @@ namespace Chest.Core.Logging
     public static class Logger
     {
         private static ILogger DefaultLogger { get; set; } =
-            LoggerFactory.Create(builder => builder.AddConsole()).CreateLogger("HARK");
+            LoggerFactory.Create(builder => builder.AddConsole()).CreateLogger("BJSS");
 
         /// <summary>
         /// Logs an error message.
