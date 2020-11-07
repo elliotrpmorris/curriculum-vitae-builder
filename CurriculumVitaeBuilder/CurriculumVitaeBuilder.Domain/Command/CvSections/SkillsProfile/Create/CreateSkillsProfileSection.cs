@@ -31,8 +31,7 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.SkillsProfile.Create
             this.UserId = userId;
             this.CvId = cvId;
 
-            this.Skills = skills
-                ?? throw new ArgumentNullException(nameof(skills));
+            this.Skills = skills;
         }
 
         /// <summary>

@@ -23,6 +23,11 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Education.Update
             this.RuleFor(x => x.CvId)
                 .NotEmpty()
                 .WithMessage("A valid cv identifier must be provided");
+
+            this.RuleFor(x => x.EducationEstablishments)
+                .NotEmpty()
+                .NotNull()
+                .WithMessage("A education establishment must be provided");
         }
     }
 }

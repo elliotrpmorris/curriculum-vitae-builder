@@ -23,6 +23,11 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.JobHistory.Update
             this.RuleFor(x => x.CvId)
                 .NotEmpty()
                 .WithMessage("A valid cv identifier must be provided");
+
+            this.RuleFor(x => x.Jobs)
+               .NotEmpty()
+               .NotNull()
+               .WithMessage("A job must be provided");
         }
     }
 }

@@ -4,8 +4,6 @@
 
 namespace CurriculumVitaeBuilder.Api.Controllers.Query.UserRoot.Types.Sections
 {
-    using System.Collections.Generic;
-
     using CurriculumVitaeBuilder.Domain.Data.CvSections.JobHistory;
 
     using GraphQL.Types;
@@ -30,11 +28,9 @@ namespace CurriculumVitaeBuilder.Api.Controllers.Query.UserRoot.Types.Sections
                 .Description("The education establishment end.")
                 .Resolve(context => context.Source.End.ToString("u"));
 
-            this.Field<
-               ListGraphType<StringGraphType>,
-               IList<string>?>("duties")
-                .Description("The duties.")
-                .Resolve(context => context.Source.Duties);
+            this.Field<StringGraphType, string?>("description")
+                .Description("The description of the role.")
+                .Resolve(context => context.Source.Description);
         }
     }
 }

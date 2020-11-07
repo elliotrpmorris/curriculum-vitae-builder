@@ -31,8 +31,7 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Education.Create
             this.UserId = userId;
             this.CvId = cvId;
 
-            this.EducationEstablishments = educationEstablishments
-                ?? throw new ArgumentNullException(nameof(educationEstablishments));
+            this.EducationEstablishments = educationEstablishments;
         }
 
         /// <summary>

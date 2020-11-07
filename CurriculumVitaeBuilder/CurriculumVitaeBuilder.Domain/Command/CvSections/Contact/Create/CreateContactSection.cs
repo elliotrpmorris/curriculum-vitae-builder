@@ -29,8 +29,7 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Contact.Create
             this.UserId = userId;
             this.CvId = cvId;
 
-            this.ContactDetails = contactDetails
-                ?? throw new ArgumentNullException(nameof(contactDetails));
+            this.ContactDetails = contactDetails;
         }
 
         /// <summary>

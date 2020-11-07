@@ -109,12 +109,7 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
                         DateTime.Now.AddHours(-3).Date,
                         DateTime.Now.Date,
                         "Software Engineer",
-                        new List<string>()
-                        {
-                            "Build applications",
-                            "Write amazing code",
-                            "Impress clients",
-                        }),
+                        "Write good clean beautiful code"),
                 }),
         };
 

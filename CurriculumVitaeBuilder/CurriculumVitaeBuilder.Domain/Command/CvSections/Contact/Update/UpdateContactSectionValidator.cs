@@ -23,6 +23,11 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Contact.Update
             this.RuleFor(x => x.CvId)
                 .NotEmpty()
                 .WithMessage("A valid cv identifier must be provided");
+
+            this.RuleFor(x => x.ContactDetails)
+                .NotEmpty()
+                .NotNull()
+                .WithMessage("A contact detail must be provided");
         }
     }
 }

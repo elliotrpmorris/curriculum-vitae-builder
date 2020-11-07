@@ -26,7 +26,8 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.JobHistory.Create
 
             this.RuleFor(x => x.Jobs)
                 .NotEmpty()
-                .WithMessage("Jobs must be provided");
+                .NotNull()
+                .WithMessage("A job must be provided");
         }
     }
 }

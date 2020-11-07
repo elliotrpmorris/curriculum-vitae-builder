@@ -19,8 +19,10 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.JobHistor
     /// <summary>
     /// Marten Contact Section store.
     /// </summary>
-    internal sealed class MartenJobHistorySectionStore
-        : ICvSectionReader<JobHistorySection>, ICvSectionWriter<JobHistorySection>
+    internal sealed class MartenJobHistorySectionStore :
+        ICvSectionReader<JobHistorySection>,
+        ICvSectionWriter<JobHistorySection>,
+        IJobWriter
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MartenJobHistorySectionStore"/> class.
@@ -148,11 +150,7 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.JobHistor
                                 job.Start,
                                 job.End,
                                 job.JobTitle,
-                                this.UpdateDuties(
-                                    job.Duties.ToList(),
-                                    sectionToUpdate
-                                        .Jobs[existingJobIndex]
-                                        .Duties.ToList()));
+                                job.Description);
                 }
             }
 
@@ -174,16 +172,38 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.JobHistor
             return exists;
         }
 
-        private IList<string> UpdateDuties(List<string> newDuties, List<string> existingDuties)
+        /// <inheritdoc/>
+        public async Task DeleteAsync(
+            Guid cvId,
+            string employer,
+            string jobTitle)
         {
-            // TODO: Investigate better way to do this :/
-            existingDuties
-                .AddRange(newDuties
-                    .Where((n) =>
-                        existingDuties.FindIndex((e) =>
-                            e == n) == -1));
+            using var session = this.DocumentStore.LightweightSession();
 
-            return existingDuties;
+            var section = await
+               session
+                   .Query<JobHistorySectionDocument>()
+                   .FirstOrDefaultAsync(s =>
+                        s.CvId == cvId);
+
+            if (section == null)
+            {
+                Logger.LogInformation($"Section Doesn't contain contact detail: {employer}");
+
+                return;
+            }
+
+            var jobToRemove = section
+                .Jobs
+                .FirstOrDefault(e =>
+                    e.Employer == employer &&
+                    e.JobTitle == jobTitle);
+
+            section.Jobs.Remove(jobToRemove);
+
+            session.Update(section);
+
+            await session.SaveChangesAsync();
         }
     }
 }

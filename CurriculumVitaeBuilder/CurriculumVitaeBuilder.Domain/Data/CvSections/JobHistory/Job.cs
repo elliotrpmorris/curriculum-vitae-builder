@@ -5,7 +5,6 @@
 namespace CurriculumVitaeBuilder.Domain.Data.CvSections.JobHistory
 {
     using System;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Job.
@@ -19,13 +18,13 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections.JobHistory
         /// <param name="start">The start date at the job.</param>
         /// <param name="end">The end date at the job.</param>
         /// <param name="jobTitle">The job title.</param>
-        /// <param name="duties">The collection of duties.</param>
+        /// <param name="description">The description of the role.</param>
         public Job(
             string employer,
             DateTime start,
             DateTime end,
             string jobTitle,
-            IList<string> duties)
+            string description)
         {
             if (string.IsNullOrWhiteSpace(employer))
             {
@@ -52,8 +51,8 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections.JobHistory
             this.End = end;
             this.JobTitle = jobTitle;
 
-            this.Duties = duties
-                ?? throw new ArgumentNullException(nameof(duties));
+            this.Description = description
+                ?? throw new ArgumentNullException(nameof(description));
         }
 
         /// <summary>
@@ -77,8 +76,8 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections.JobHistory
         public string JobTitle { get; }
 
         /// <summary>
-        /// Gets the collection of duties.
+        /// Gets the description of the role.
         /// </summary>
-        public IList<string> Duties { get; }
+        public string Description { get; }
     }
 }

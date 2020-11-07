@@ -11,6 +11,7 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
     using CurriculumVitaeBuilder.Domain.Data.CvSections.Bio;
     using CurriculumVitaeBuilder.Domain.Data.CvSections.Contact;
     using CurriculumVitaeBuilder.Domain.Data.CvSections.Education;
+    using CurriculumVitaeBuilder.Domain.Data.CvSections.JobHistory;
     using CurriculumVitaeBuilder.Domain.Data.CvSections.SkillsProfile;
     using CurriculumVitaeBuilder.Domain.Data.User;
     using CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections;
@@ -107,19 +108,23 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
 
             services
                 .AddTransient<ICvSectionReader<ContactSection>, MartenContactSectionStore>()
-                .AddTransient<ICvSectionWriter<ContactSection>, MartenContactSectionStore>();
+                .AddTransient<ICvSectionWriter<ContactSection>, MartenContactSectionStore>()
+                .AddTransient<ICvSectionContentWriter<ContactSection>, MartenContactSectionStore>();
 
             services
                 .AddTransient<ICvSectionReader<EducationSection>, MartenEducationSectionStore>()
-                .AddTransient<ICvSectionWriter<EducationSection>, MartenEducationSectionStore>();
+                .AddTransient<ICvSectionWriter<EducationSection>, MartenEducationSectionStore>()
+                .AddTransient<ICvSectionContentWriter<EducationSection>, MartenEducationSectionStore>();
 
             services
                 .AddTransient<ICvSectionReader<JobHistorySection>, MartenJobHistorySectionStore>()
-                .AddTransient<ICvSectionWriter<JobHistorySection>, MartenJobHistorySectionStore>();
+                .AddTransient<ICvSectionWriter<JobHistorySection>, MartenJobHistorySectionStore>()
+                .AddTransient<IJobWriter, MartenJobHistorySectionStore>();
 
             services
                 .AddTransient<ICvSectionReader<SkillsProfileSection>, MartenSkillsProfileSectionStore>()
-                .AddTransient<ICvSectionWriter<SkillsProfileSection>, MartenSkillsProfileSectionStore>();
+                .AddTransient<ICvSectionWriter<SkillsProfileSection>, MartenSkillsProfileSectionStore>()
+                .AddTransient<ICvSectionContentWriter<SkillsProfileSection>, MartenSkillsProfileSectionStore>();
 
             return services;
         }

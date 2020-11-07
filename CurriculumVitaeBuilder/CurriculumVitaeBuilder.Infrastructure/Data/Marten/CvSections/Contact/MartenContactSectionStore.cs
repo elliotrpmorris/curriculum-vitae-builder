@@ -19,8 +19,10 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Contact
     /// <summary>
     /// Marten Contact Section store.
     /// </summary>
-    internal sealed class MartenContactSectionStore
-        : ICvSectionReader<ContactSection>, ICvSectionWriter<ContactSection>
+    internal sealed class MartenContactSectionStore :
+        ICvSectionReader<ContactSection>,
+        ICvSectionWriter<ContactSection>,
+        ICvSectionContentWriter<ContactSection>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MartenContactSectionStore"/> class.
@@ -122,11 +124,16 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Contact
 
             foreach (var detail in section.ContactDetails)
             {
+                var existingContactDetail =
+                    sectionToUpdate.ContactDetails
+                        .FirstOrDefault(c =>
+                            c.Key.ToLower() == detail.Key.ToLower());
+
                 // Contact detail exists but new value.
-                if (sectionToUpdate.ContactDetails.ContainsKey(detail.Key))
+                if (existingContactDetail.Key != null)
                 {
                     // Update value to new value.
-                    sectionToUpdate.ContactDetails[detail.Key] = detail.Value;
+                    sectionToUpdate.ContactDetails[existingContactDetail.Key] = detail.Value;
                 }
                 else
                 {
@@ -151,6 +158,32 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Contact
                     .AnyAsync(s => s.CvId == cvId);
 
             return exists;
+        }
+
+        /// <inheritdoc/>
+        public async Task DeleteAsync(Guid cvId, string name)
+        {
+            using var session = this.DocumentStore.LightweightSession();
+
+            var section = await
+               session
+                   .Query<ContactSectionDocument>()
+                   .FirstOrDefaultAsync(s =>
+                        s.CvId == cvId &&
+                        s.ContactDetails.ContainsKey(name));
+
+            if (section == null)
+            {
+                Logger.LogInformation($"Section Doesn't contain contact detail: {name}");
+
+                return;
+            }
+
+            section.ContactDetails.Remove(name);
+
+            session.Update(section);
+
+            await session.SaveChangesAsync();
         }
     }
 }

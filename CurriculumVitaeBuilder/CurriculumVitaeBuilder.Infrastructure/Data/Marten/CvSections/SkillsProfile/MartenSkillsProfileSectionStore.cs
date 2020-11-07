@@ -19,8 +19,10 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.SkillsPro
     /// <summary>
     /// Marten Contact Section store.
     /// </summary>
-    internal sealed class MartenSkillsProfileSectionStore
-        : ICvSectionReader<SkillsProfileSection>, ICvSectionWriter<SkillsProfileSection>
+    internal sealed class MartenSkillsProfileSectionStore :
+        ICvSectionReader<SkillsProfileSection>,
+        ICvSectionWriter<SkillsProfileSection>,
+        ICvSectionContentWriter<SkillsProfileSection>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MartenSkillsProfileSectionStore"/> class.
@@ -162,6 +164,35 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.SkillsPro
                     .AnyAsync(s => s.CvId == cvId);
 
             return exists;
+        }
+
+        /// <inheritdoc/>
+        public async Task DeleteAsync(Guid cvId, string name)
+        {
+            using var session = this.DocumentStore.LightweightSession();
+
+            var section = await
+               session
+                   .Query<SkillsProfileSectionDocument>()
+                   .FirstOrDefaultAsync(s =>
+                        s.CvId == cvId);
+
+            if (section == null)
+            {
+                Logger.LogInformation($"Section Doesn't contain contact detail: {name}");
+
+                return;
+            }
+
+            var skilltoRemove = section
+                .Skills
+                .FirstOrDefault(e => e.Name == name);
+
+            section.Skills.Remove(skilltoRemove);
+
+            session.Update(section);
+
+            await session.SaveChangesAsync();
         }
     }
 }

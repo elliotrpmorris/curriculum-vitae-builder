@@ -19,8 +19,10 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Education
     /// <summary>
     /// Marten Contact Section store.
     /// </summary>
-    internal sealed class MartenEducationSectionStore
-        : ICvSectionReader<EducationSection>, ICvSectionWriter<EducationSection>
+    internal sealed class MartenEducationSectionStore :
+        ICvSectionReader<EducationSection>,
+        ICvSectionWriter<EducationSection>,
+        ICvSectionContentWriter<EducationSection>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MartenEducationSectionStore"/> class.
@@ -162,6 +164,35 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Education
                     .AnyAsync(s => s.CvId == cvId);
 
             return exists;
+        }
+
+        /// <inheritdoc/>
+        public async Task DeleteAsync(Guid cvId, string name)
+        {
+            using var session = this.DocumentStore.LightweightSession();
+
+            var section = await
+               session
+                   .Query<EducationSectionDocument>()
+                   .FirstOrDefaultAsync(s =>
+                        s.CvId == cvId);
+
+            if (section == null)
+            {
+                Logger.LogInformation($"Section Doesn't contain contact detail: {name}");
+
+                return;
+            }
+
+            var establishmentToRemove = section
+                .EducationEstablishments
+                .FirstOrDefault(e => e.Name == name);
+
+            section.EducationEstablishments.Remove(establishmentToRemove);
+
+            session.Update(section);
+
+            await session.SaveChangesAsync();
         }
     }
 }

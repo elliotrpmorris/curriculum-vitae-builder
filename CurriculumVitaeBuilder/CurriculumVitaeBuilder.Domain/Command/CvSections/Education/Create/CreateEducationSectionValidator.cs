@@ -26,6 +26,7 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Education.Create
 
             this.RuleFor(x => x.EducationEstablishments)
                 .NotEmpty()
+                .NotNull()
                 .WithMessage("Education establishments must be provided");
         }
     }

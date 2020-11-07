@@ -26,7 +26,8 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Contact.Create
 
             this.RuleFor(x => x.ContactDetails)
                 .NotEmpty()
-                .WithMessage("A contact details must be provided");
+                .NotNull()
+                .WithMessage("A contact detail must be provided");
         }
     }
 }

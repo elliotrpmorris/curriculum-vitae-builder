@@ -26,6 +26,7 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.SkillsProfile.Update
 
             this.RuleFor(x => x.Skills)
                .NotEmpty()
+               .NotNull()
                .WithMessage("Skills must be provided");
         }
     }

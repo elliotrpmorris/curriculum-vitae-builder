@@ -5,6 +5,7 @@
 namespace CurriculumVitaeBuilder.Domain.Command.CvSections.SkillsProfile.Update
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Chest.Core.Command;

@@ -31,8 +31,7 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.JobHistory.Update
             this.UserId = userId;
             this.CvId = cvId;
 
-            this.Jobs = jobs
-                ?? throw new ArgumentNullException(nameof(jobs));
+            this.Jobs = jobs;
         }
 
         /// <summary>
