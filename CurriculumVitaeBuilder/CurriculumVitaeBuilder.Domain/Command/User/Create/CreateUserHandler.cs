@@ -48,7 +48,7 @@ namespace CurriculumVitaeBuilder.Domain.Command.User.Create
         /// <inheritdoc/>
         public async Task Handle(CreateUser command, CommandMetadata metadata)
         {
-            if (command.UserName == default)
+            if (string.IsNullOrWhiteSpace(command.UserName))
             {
                 throw new InvalidCommandException(
                     metadata.CommandName,

@@ -24,6 +24,16 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections.Education
             IList<EducationEstablishment> educationEstablishments)
             : base(id, cvId)
         {
+            if (id == default)
+            {
+                throw new ArgumentException(nameof(id));
+            }
+
+            if (cvId == default)
+            {
+                throw new ArgumentException(nameof(cvId));
+            }
+
             this.EducationEstablishments = educationEstablishments
                 ?? throw new ArgumentNullException(nameof(educationEstablishments));
 

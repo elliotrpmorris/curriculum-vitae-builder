@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurriculumVitaeBuilder.Api", "CurriculumVitaeBuilder.Api\CurriculumVitaeBuilder.Api.csproj", "{6F1E749C-A85C-4AA2-BBCC-C59FA15C86BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurriculumVitaeBuilder.Api", "CurriculumVitaeBuilder.Api\CurriculumVitaeBuilder.Api.csproj", "{6F1E749C-A85C-4AA2-BBCC-C59FA15C86BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurriculumVitaeBuilder.Domain", "CurriculumVitaeBuilder.Domain\CurriculumVitaeBuilder.Domain.csproj", "{4B6269DA-36CF-4CB9-9855-7BA08AE8BAC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurriculumVitaeBuilder.Domain", "CurriculumVitaeBuilder.Domain\CurriculumVitaeBuilder.Domain.csproj", "{4B6269DA-36CF-4CB9-9855-7BA08AE8BAC8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{77F980B6-7949-4F0C-AB64-A3ED5541AB52}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{79AC3554-1680-481E-A798-010CFB556624}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurriculumVitaeBuilder.Infrastructure", "CurriculumVitaeBuilder.Infrastructure\CurriculumVitaeBuilder.Infrastructure.csproj", "{1BB7D5AF-2F0A-4510-89F1-D2BC91C70B97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurriculumVitaeBuilder.Infrastructure", "CurriculumVitaeBuilder.Infrastructure\CurriculumVitaeBuilder.Infrastructure.csproj", "{1BB7D5AF-2F0A-4510-89F1-D2BC91C70B97}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{E0E4EC63-B931-47D9-A35A-6190B25D8685}"
 EndProject
@@ -23,13 +23,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\stylecop.json = ..\stylecop.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurriculumVitaeBuilder.Api.Tests", "CurriculumVitaeBuilder.Api.Tests\CurriculumVitaeBuilder.Api.Tests.csproj", "{AD3C5E81-497A-4627-AE14-7C235B691CE9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurriculumVitaeBuilder.Domain.Tests", "CurriculumVitaeBuilder.Domain.Tests\CurriculumVitaeBuilder.Domain.Tests.csproj", "{DF7D0E8E-573B-4491-A6B3-0CFA514206C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurriculumVitaeBuilder.Domain.Tests", "CurriculumVitaeBuilder.Domain.Tests\CurriculumVitaeBuilder.Domain.Tests.csproj", "{DF7D0E8E-573B-4491-A6B3-0CFA514206C7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "helper", "helper", "{F7ECDD1E-14CA-4423-B2FE-C7509B6FC289}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chest.Core", "Chest.Core\Chest.Core.csproj", "{38DE2790-D73E-4AA7-BF69-20DA3F1DA47B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chest.Core", "Chest.Core\Chest.Core.csproj", "{38DE2790-D73E-4AA7-BF69-20DA3F1DA47B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,10 +47,6 @@ Global
 		{1BB7D5AF-2F0A-4510-89F1-D2BC91C70B97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BB7D5AF-2F0A-4510-89F1-D2BC91C70B97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BB7D5AF-2F0A-4510-89F1-D2BC91C70B97}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AD3C5E81-497A-4627-AE14-7C235B691CE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AD3C5E81-497A-4627-AE14-7C235B691CE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AD3C5E81-497A-4627-AE14-7C235B691CE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AD3C5E81-497A-4627-AE14-7C235B691CE9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DF7D0E8E-573B-4491-A6B3-0CFA514206C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DF7D0E8E-573B-4491-A6B3-0CFA514206C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF7D0E8E-573B-4491-A6B3-0CFA514206C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -70,7 +64,6 @@ Global
 		{4B6269DA-36CF-4CB9-9855-7BA08AE8BAC8} = {77F980B6-7949-4F0C-AB64-A3ED5541AB52}
 		{1BB7D5AF-2F0A-4510-89F1-D2BC91C70B97} = {77F980B6-7949-4F0C-AB64-A3ED5541AB52}
 		{E0E4EC63-B931-47D9-A35A-6190B25D8685} = {77F980B6-7949-4F0C-AB64-A3ED5541AB52}
-		{AD3C5E81-497A-4627-AE14-7C235B691CE9} = {79AC3554-1680-481E-A798-010CFB556624}
 		{DF7D0E8E-573B-4491-A6B3-0CFA514206C7} = {79AC3554-1680-481E-A798-010CFB556624}
 		{38DE2790-D73E-4AA7-BF69-20DA3F1DA47B} = {F7ECDD1E-14CA-4423-B2FE-C7509B6FC289}
 	EndGlobalSection

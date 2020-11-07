@@ -20,6 +20,16 @@ namespace CurriculumVitaeBuilder.Domain.Data
             Guid id,
             Guid userId)
         {
+            if (id == default)
+            {
+                throw new ArgumentException(nameof(id));
+            }
+
+            if (userId == default)
+            {
+                throw new ArgumentException(nameof(userId));
+            }
+
             this.Id = id;
             this.UserId = userId;
         }

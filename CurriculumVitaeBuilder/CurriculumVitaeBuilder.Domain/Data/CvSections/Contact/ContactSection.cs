@@ -24,6 +24,16 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections.Contact
             IDictionary<string, string> contactDetails)
             : base(id, cvId)
         {
+            if (id == default)
+            {
+                throw new ArgumentException(nameof(id));
+            }
+
+            if (cvId == default)
+            {
+                throw new ArgumentException(nameof(cvId));
+            }
+
             this.ContactDetails = contactDetails
                 ?? throw new ArgumentNullException(nameof(contactDetails));
 

@@ -24,6 +24,16 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections.SkillsProfile
             IList<Skill> skills)
             : base(id, cvId)
         {
+            if (id == default)
+            {
+                throw new ArgumentException(nameof(id));
+            }
+
+            if (cvId == default)
+            {
+                throw new ArgumentException(nameof(cvId));
+            }
+
             this.Skills = skills
                 ?? throw new ArgumentNullException(nameof(skills));
 

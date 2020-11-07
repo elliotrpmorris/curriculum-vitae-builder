@@ -25,12 +25,22 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections.Bio
             string city)
             : base(id, cvId)
         {
+            if (id == default)
+            {
+                throw new ArgumentException(nameof(id));
+            }
+
+            if (cvId == default)
+            {
+                throw new ArgumentException(nameof(cvId));
+            }
+
             if (string.IsNullOrWhiteSpace(fullName))
             {
                 throw new ArgumentException(nameof(fullName));
             }
 
-            if (city == default)
+            if (string.IsNullOrWhiteSpace(city))
             {
                 throw new ArgumentException(nameof(city));
             }

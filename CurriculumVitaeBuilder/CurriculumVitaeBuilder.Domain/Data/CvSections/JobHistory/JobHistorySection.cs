@@ -26,6 +26,16 @@ namespace CurriculumVitaeBuilder.Domain.Data.CvSections
             IList<Job> jobs)
             : base(id, cvId)
         {
+            if (id == default)
+            {
+                throw new ArgumentException(nameof(id));
+            }
+
+            if (cvId == default)
+            {
+                throw new ArgumentException(nameof(cvId));
+            }
+
             this.Jobs = jobs
                 ?? throw new ArgumentNullException(nameof(jobs));
 
