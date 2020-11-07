@@ -2,14 +2,14 @@
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Domain.Command.CvSections.BioSection.Create
+namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Bio.Create
 {
     using Chest.Core.Command;
 
     using FluentValidation;
 
     /// <summary>
-    /// Create Bio Section Validator.
+    /// Create Section Validator.
     /// </summary>
     public class CreateBioSectionValidator : CommandValidator<CreateBioSection>
     {

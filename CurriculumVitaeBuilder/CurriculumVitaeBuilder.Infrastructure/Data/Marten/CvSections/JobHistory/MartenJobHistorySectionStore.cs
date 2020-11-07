@@ -74,7 +74,12 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.JobHistor
                     .Query<JobHistorySectionDocument>()
                     .FirstOrDefaultAsync(s => s.CvId == cvId);
 
-            return section.ToJobHistorySection() ?? null;
+            if (section == null)
+            {
+                return null;
+            }
+
+            return section.ToJobHistorySection();
         }
 
         /// <inheritdoc/>
@@ -103,11 +108,13 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.JobHistor
             using var session = this.DocumentStore.LightweightSession();
 
             var exists = await
-                session.Query<JobHistorySectionDocument>().AnyAsync(s => s.CvId == section.CvId);
+                session
+                    .Query<JobHistorySectionDocument>()
+                    .AnyAsync(s => s.CvId == section.CvId);
 
             if (exists)
             {
-                Logger.LogInformation($"{section.Title} Section Already exists for {section.CvId}");
+                Logger.LogInformation($"{section.Title} Section Doesn't exist for {section.CvId}");
 
                 return;
             }

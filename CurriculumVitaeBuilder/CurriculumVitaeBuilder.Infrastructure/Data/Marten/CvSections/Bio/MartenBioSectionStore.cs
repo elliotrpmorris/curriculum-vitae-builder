@@ -75,7 +75,12 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio
                     .Query<BioSectionDocument>()
                     .FirstOrDefaultAsync(s => s.CvId == cvId);
 
-            return section.ToBioSection() ?? null;
+            if (section == null)
+            {
+                return null;
+            }
+
+            return section.ToBioSection();
         }
 
         /// <inheritdoc/>
@@ -123,11 +128,13 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio
             using var session = this.DocumentStore.LightweightSession();
 
             var exists = await
-                session.Query<BioSectionDocument>().AnyAsync(s => s.CvId == section.CvId);
+                session
+                    .Query<BioSectionDocument>()
+                    .AnyAsync(s => s.CvId == section.CvId);
 
             if (exists)
             {
-                Logger.LogInformation($"{section.Title} Section Already exists for {section.CvId}");
+                Logger.LogInformation($"{section.Title} Section Doesn't exist for {section.CvId}");
 
                 return;
             }

@@ -75,7 +75,12 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Education
                     .Query<EducationSectionDocument>()
                     .FirstOrDefaultAsync(s => s.CvId == cvId);
 
-            return section.ToEducationSection() ?? null;
+            if (section == null)
+            {
+                return null;
+            }
+
+            return section.ToEducationSection();
         }
 
         /// <inheritdoc/>
@@ -104,11 +109,13 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Education
             using var session = this.DocumentStore.LightweightSession();
 
             var exists = await
-                session.Query<EducationSectionDocument>().AnyAsync(s => s.CvId == section.CvId);
+                session
+                    .Query<EducationSectionDocument>()
+                    .AnyAsync(s => s.CvId == section.CvId);
 
             if (exists)
             {
-                Logger.LogInformation($"{section.Title} Section Already exists for {section.CvId}");
+                Logger.LogInformation($"{section.Title} Section Doesn't exist for {section.CvId}");
 
                 return;
             }

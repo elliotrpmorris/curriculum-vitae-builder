@@ -1,27 +1,27 @@
-﻿// <copyright file="CreateBioSection.cs" company="BJSS">
+﻿// <copyright file="UpdateBioSection.cs" company="BJSS">
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Domain.Command.CvSections.BioSection.Create
+namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Bio.Update
 {
     using System;
 
     using Chest.Core.Command;
 
     /// <summary>
-    /// Create CV Bio Section Command.
+    /// Create Section Command.
     /// </summary>
-    [CommandName("CVSECTION/CREATE_BIO_SECTION")]
-    public class CreateBioSection : ICommand
+    [CommandName("CVSECTION/UPDATE_BIO_SECTION")]
+    public class UpdateBioSection : ICommand
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateBioSection"/> class.
+        /// Initializes a new instance of the <see cref="UpdateBioSection"/> class.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <param name="cvId">The cv identifier.</param>
         /// <param name="fullName">The full name.</param>
         /// <param name="city">The city.</param>
-        public CreateBioSection(
+        public UpdateBioSection(
             Guid userId,
             Guid cvId,
             string fullName,

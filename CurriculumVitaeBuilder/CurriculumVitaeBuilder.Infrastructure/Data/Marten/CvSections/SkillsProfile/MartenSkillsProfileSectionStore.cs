@@ -75,7 +75,12 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.SkillsPro
                     .Query<SkillsProfileSectionDocument>()
                     .FirstOrDefaultAsync(s => s.CvId == cvId);
 
-            return section.ToSkillsProfile() ?? null;
+            if (section == null)
+            {
+                return null;
+            }
+
+            return section.ToSkillsProfile();
         }
 
         /// <inheritdoc/>
@@ -104,11 +109,13 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.SkillsPro
             using var session = this.DocumentStore.LightweightSession();
 
             var exists = await
-                session.Query<SkillsProfileSectionDocument>().AnyAsync(s => s.CvId == section.CvId);
+                session
+                    .Query<SkillsProfileSectionDocument>()
+                    .AnyAsync(s => s.CvId == section.CvId);
 
             if (exists)
             {
-                Logger.LogInformation($"{section.Title} Section Already exists for {section.CvId}");
+                Logger.LogInformation($"{section.Title} Section Doesn't exist for {section.CvId}");
 
                 return;
             }
