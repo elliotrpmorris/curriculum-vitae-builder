@@ -62,9 +62,9 @@ Each section has a command for creating, updating, and deleting and any nested o
 
 3. This will populated your envrioment with all availble commands and a some example GraphQL requests the first showing a Cv generated with the seed data. 
 
-Below is instrucations if you dont import the requests.
+Set up without importing the insomnia request guide below.
 
-## Querying the API 
+### Querying the API 
  (Please note this example will be using Insomia but you can also query this using other tools for example Postman is a popular API client)
  
  1. Open Insomnia. Click the plus and New Request this can be called anything. But make sure the type is `POST`
@@ -131,7 +131,7 @@ query {
   
   Having a GraphQL API is super powerful as it  allows you to easily create complex querys. Aslong as its on the graph are there you can query it!
 
-## Sending Commands to the API 
+### Sending Commands to the API 
 (Please note this example will be using Insomia but you can also query this using other tools for example Postman is a popular API client)
 
  1. Open Insomnia. Click the plus and New Request this can be called anything. But make sure the type is `POST`
