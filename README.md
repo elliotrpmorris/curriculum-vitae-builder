@@ -146,7 +146,7 @@ query {
 
  The above query will display a users CV and its sections.
   
-  Since this API uses GraphQL you can ask for as little or as much as you want of the CV for example if you just wanted the bio and contact sections you can emit the rest of the query.
+  Since this API uses GraphQL you can ask for as little or as much as you want of the CV for example if you just wanted the bio and contact sections you can omit the rest of the query.
   
   You can also view the documentation inside Insomina to see what fields are avalible there. 
   
@@ -157,7 +157,7 @@ query {
 
 Each section has a command for creating, updating, and deleting and any nested objects also have their own delete command. But these nested objects can be created and updated on their corresponding section.
 
- 1. Open Insomnia. Click the plus and New Request this can be called anything. But make sure the type is `POST`
+ 1. Open Insomnia. Click the plus and then New Request you can call this anything. But make sure the type is `POST`
  
  2. On the Body drop down then click Json. 
  
