@@ -1,6 +1,27 @@
 # Curriculum Vitae Builder
 This is a service to build and manipulate CV's
 
+### Summary
+
+The seed data provides you with an example user and CV with 3/5 of the possible sections pre-populated with some example data.
+
+You can manipulate these sections in any way you like using the provided commands. Most commands require a cvId and a userId this is so in the future a user could have multiple CVs.
+
+A CV can currently only contain one of each section type.
+
+You can also create users. Upon creation of a user a blank CV created for them. You can then use the commands to manipulate the sections.
+
+The database contains 3 tables to power all of this
+
+```
+
+mt_doc_users
+mt_doc_cvs
+mt_doc_cv_sections
+
+```
+
+This was built with flexibility and extension in mind. Only one table is needed for all the sections. The way this was possible is down to using document storage and the sub-class functionality of Marten DB meaning multiple doctypes can live in a related table.
 
 ## Setup
 
@@ -58,7 +79,11 @@ To get the Curriculum Vitae Builder service up and running locally on your machi
 
 2. Click `Import data` then `from file` navigate to the root folder of `curriculum-vitae-builder` and select the `Insomnia_Requests.json`
 
-3. This will populated your envrioment with all availble commands and a some example GraphQL requests the first showing a Cv generated with the seed data. 
+3. This will populate your envrioment with all availble commands and a some example GraphQL requests. 
+
+If you click the View CV query and have the API running you can click show documentation to see what you can query for on the API.
+
+The view CV query displays most of the fields you can query for in the app
 
 Set up without importing the insomnia request guide below.
 
