@@ -11,14 +11,12 @@ A CV can currently only contain one of each section type.
 
 You can also create users. Upon creation of a user a blank CV created for them. You can then use the commands to manipulate the sections.
 
-The database contains 3 tables to power all of this
+The database contains 3 tables to power all of this:
 
 ```
-
 mt_doc_users
 mt_doc_cvs
 mt_doc_cv_sections
-
 ```
 
 This was built with flexibility and extension in mind. Only one table is needed for all the sections. The way this was possible is down to using document storage and the sub-class functionality of Marten DB meaning multiple doctypes can live in a related table.
