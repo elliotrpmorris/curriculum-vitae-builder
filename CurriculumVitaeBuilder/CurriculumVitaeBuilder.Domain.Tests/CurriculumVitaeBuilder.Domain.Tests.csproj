@@ -36,7 +36,6 @@
     <Folder Include="Command\CvSections\Bio\Update\" />
     <Folder Include="Command\CvSections\Contact\Delete\" />
     <Folder Include="Command\CvSections\Contact\Update\" />
-    <Folder Include="Command\CvSections\Education\Delete\" />
     <Folder Include="Command\CvSections\Education\Update\" />
   </ItemGroup>
 

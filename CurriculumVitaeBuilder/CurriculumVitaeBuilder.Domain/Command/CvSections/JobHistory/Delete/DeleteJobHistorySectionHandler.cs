@@ -67,7 +67,7 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.JobHistory.Delete
                 throw new InvalidCommandException(
                   metadata.CommandName,
                   typeof(DeleteJobHistorySection).Name,
-                  $"CV section doesn't exists.");
+                  $"CV section doesn't exist.");
             }
 
             await this.CvSectionWriter.DeleteAsync(section);

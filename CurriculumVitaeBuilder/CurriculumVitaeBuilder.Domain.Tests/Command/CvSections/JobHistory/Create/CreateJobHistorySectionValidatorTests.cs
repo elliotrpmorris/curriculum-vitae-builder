@@ -55,7 +55,7 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.JobHistory.Crea
         }
 
         [Fact]
-        public void Validate_InvalidContactDetails_Fails()
+        public void Validate_InvalidJobHistory_Fails()
         {
             // Arrange
             List<Job>? jobs = null;

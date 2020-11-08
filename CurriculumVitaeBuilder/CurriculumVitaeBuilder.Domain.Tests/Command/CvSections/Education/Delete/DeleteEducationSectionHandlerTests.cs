@@ -11,7 +11,6 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Education.Delet
     using Chest.Core.Command;
     using Chest.Core.Exceptions;
 
-    using CurriculumVitaeBuilder.Domain.Command.CvSections.Education.Create;
     using CurriculumVitaeBuilder.Domain.Command.CvSections.Education.Delete;
     using CurriculumVitaeBuilder.Domain.Data;
     using CurriculumVitaeBuilder.Domain.Data.CvSections;
@@ -19,6 +18,7 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Education.Delet
 
     using NSubstitute;
     using NSubstitute.ReturnsExtensions;
+
     using Xunit;
 
     public class DeleteEducationSectionHandlerTests

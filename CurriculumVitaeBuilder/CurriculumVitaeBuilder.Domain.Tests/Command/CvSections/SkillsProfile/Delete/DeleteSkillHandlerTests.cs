@@ -1,8 +1,8 @@
-﻿// <copyright file="DeleteEducationEstablishmentHandlerTests.cs" company="BJSS">
+﻿// <copyright file="DeleteSkillHandlerTests.cs" company="BJSS">
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Education
+namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.SkillsProfile.Delete
 {
     using System;
     using System.Collections.Generic;
@@ -11,34 +11,34 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Education
     using Chest.Core.Command;
     using Chest.Core.Exceptions;
 
-    using CurriculumVitaeBuilder.Domain.Command.CvSections.Education.DeleteEducationEstablishment;
+    using CurriculumVitaeBuilder.Domain.Command.CvSections.SkillsProfile.DeleteSkill;
     using CurriculumVitaeBuilder.Domain.Data;
     using CurriculumVitaeBuilder.Domain.Data.CvSections;
-    using CurriculumVitaeBuilder.Domain.Data.CvSections.Education;
+    using CurriculumVitaeBuilder.Domain.Data.CvSections.SkillsProfile;
 
     using NSubstitute;
     using NSubstitute.ReturnsExtensions;
 
     using Xunit;
 
-    public class DeleteEducationEstablishmentHandlerTests
+    public class DeleteSkillHandlerTests
     {
         [Fact]
         public async void Handle_CvDoesntExist_Throws()
         {
             // Arrange
-            var cvSectionContentWriter = Substitute.For<ICvSectionContentWriter<EducationSection>>();
-            var cvSectionReader = Substitute.For<ICvSectionReader<EducationSection>>();
+            var cvSectionContentWriter = Substitute.For<ICvSectionContentWriter<SkillsProfileSection>>();
+            var cvSectionReader = Substitute.For<ICvSectionReader<SkillsProfileSection>>();
             var cvReader = Substitute.For<ICvReader>();
 
-            var handler = new DeleteEducationEstablishmentHandler(
+            var handler = new DeleteSkillHandler(
                 cvSectionContentWriter,
                 cvSectionReader,
                 cvReader);
 
-            var metadata = new CommandMetadata("DeleteEducationEstablishment", DateTime.UtcNow, Guid.NewGuid().ToString());
+            var metadata = new CommandMetadata("DeleteSkill", DateTime.UtcNow, Guid.NewGuid().ToString());
 
-            var command = new DeleteEducationEstablishment(
+            var command = new DeleteSkill(
                 Guid.NewGuid(),
                 "test");
 
@@ -61,18 +61,18 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Education
         {
             // Arrange
             // Arrange
-            var cvSectionContentWriter = Substitute.For<ICvSectionContentWriter<EducationSection>>();
-            var cvSectionReader = Substitute.For<ICvSectionReader<EducationSection>>();
+            var cvSectionContentWriter = Substitute.For<ICvSectionContentWriter<SkillsProfileSection>>();
+            var cvSectionReader = Substitute.For<ICvSectionReader<SkillsProfileSection>>();
             var cvReader = Substitute.For<ICvReader>();
 
-            var handler = new DeleteEducationEstablishmentHandler(
-                cvSectionContentWriter,
-                cvSectionReader,
-                cvReader);
+            var handler = new DeleteSkillHandler(
+               cvSectionContentWriter,
+               cvSectionReader,
+               cvReader);
 
-            var metadata = new CommandMetadata("DeleteEducationEstablishment", DateTime.UtcNow, Guid.NewGuid().ToString());
+            var metadata = new CommandMetadata("DeleteSkill", DateTime.UtcNow, Guid.NewGuid().ToString());
 
-            var command = new DeleteEducationEstablishment(
+            var command = new DeleteSkill(
                 Guid.NewGuid(),
                 "test");
 
@@ -95,23 +95,23 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Education
         }
 
         [Fact]
-        public async void Handle_ValidCommand_DeletesEducationEstablishment()
+        public async void Handle_ValidCommand_DeletesSkillsProfileEstablishment()
         {
             // Arrange
-            var cvSectionContentWriter = Substitute.For<ICvSectionContentWriter<EducationSection>>();
-            var cvSectionReader = Substitute.For<ICvSectionReader<EducationSection>>();
+            var cvSectionContentWriter = Substitute.For<ICvSectionContentWriter<SkillsProfileSection>>();
+            var cvSectionReader = Substitute.For<ICvSectionReader<SkillsProfileSection>>();
             var cvReader = Substitute.For<ICvReader>();
 
-            var handler = new DeleteEducationEstablishmentHandler(
-                cvSectionContentWriter,
-                cvSectionReader,
-                cvReader);
+            var handler = new DeleteSkillHandler(
+               cvSectionContentWriter,
+               cvSectionReader,
+               cvReader);
 
-            var metadata = new CommandMetadata("DeleteEducationEstablishment", DateTime.UtcNow, Guid.NewGuid().ToString());
+            var metadata = new CommandMetadata("DeleteSkill", DateTime.UtcNow, Guid.NewGuid().ToString());
 
-            var command = new DeleteEducationEstablishment(
-               Guid.NewGuid(),
-               "test");
+            var command = new DeleteSkill(
+                Guid.NewGuid(),
+                "test");
 
             cvReader
                 .GetCvExistsAsync(command.CvId)
@@ -119,14 +119,14 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Education
 
             cvSectionReader
                 .GetSectionByCvAsync(command.CvId)
-                .Returns(new EducationSection(
+                .Returns(new SkillsProfileSection(
                     Guid.NewGuid(),
                     command.CvId,
-                    new List<EducationEstablishment>
+                    new List<Skill>
                     {
-                        new EducationEstablishment(
-                            "test",
-                            DateTime.Now,
+                        new Skill(
+                            "test1",
+                            "test2",
                             DateTime.Now),
                     }));
 
@@ -136,7 +136,7 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Education
 
             await cvSectionContentWriter.Received().DeleteAsync(
                 command.CvId,
-                command.EducationEstablishment);
+                command.Skill);
         }
     }
 }

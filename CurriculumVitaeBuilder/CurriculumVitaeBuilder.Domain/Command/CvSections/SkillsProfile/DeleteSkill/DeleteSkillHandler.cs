@@ -57,7 +57,7 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.SkillsProfile.DeleteS
                 throw new InvalidCommandException(
                   metadata.CommandName,
                   typeof(DeleteSkill).Name,
-                  $"CV does not exist for with cvId: {command.CvId}.");
+                  $"CV does not exist with cvId: {command.CvId}.");
             }
 
             var section = await

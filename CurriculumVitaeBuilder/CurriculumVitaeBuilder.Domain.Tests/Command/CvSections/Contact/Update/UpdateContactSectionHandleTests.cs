@@ -11,15 +11,14 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Contact.Update
     using Chest.Core.Command;
     using Chest.Core.Exceptions;
 
-    using CurriculumVitaeBuilder.Domain.Command.CvSections.Bio.Create;
-    using CurriculumVitaeBuilder.Domain.Command.CvSections.Bio.Update;
     using CurriculumVitaeBuilder.Domain.Command.CvSections.Contact.Update;
     using CurriculumVitaeBuilder.Domain.Data;
     using CurriculumVitaeBuilder.Domain.Data.CvSections;
-    using CurriculumVitaeBuilder.Domain.Data.CvSections.Bio;
     using CurriculumVitaeBuilder.Domain.Data.CvSections.Contact;
+
     using NSubstitute;
     using NSubstitute.ReturnsExtensions;
+
     using Xunit;
 
     public class UpdateContactSectionHandleTests

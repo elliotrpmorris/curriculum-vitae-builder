@@ -6,8 +6,11 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Contact.Update
 {
     using System;
     using System.Collections.Generic;
+
     using CurriculumVitaeBuilder.Domain.Command.CvSections.Contact.Update;
+
     using FluentValidation.TestHelper;
+
     using Xunit;
 
     public class UpdateContactSectionValidatorTests

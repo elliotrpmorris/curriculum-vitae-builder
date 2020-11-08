@@ -1,32 +1,32 @@
-﻿// <copyright file="DeleteContactSectionValidatorTests.cs" company="BJSS">
+﻿// <copyright file="DeleteSkillsProfileSectionValidatorTests.cs" company="BJSS">
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Contact.Delete
+namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.SkillsProfile.Delete
 {
     using System;
 
-    using CurriculumVitaeBuilder.Domain.Command.CvSections.Contact.Delete;
+    using CurriculumVitaeBuilder.Domain.Command.CvSections.SkillsProfile.Delete;
 
     using FluentValidation.TestHelper;
 
     using Xunit;
 
-    public class DeleteContactSectionValidatorTests
+    public class DeleteSkillsProfileSectionValidatorTests
     {
-        public DeleteContactSectionValidatorTests()
+        public DeleteSkillsProfileSectionValidatorTests()
         {
-            this.Validator = new DeleteContactSectionValidator();
+            this.Validator = new DeleteSkillsProfileSectionValidator();
             this.Validator.ConfigureRules();
         }
 
-        private DeleteContactSectionValidator Validator { get; }
+        private DeleteSkillsProfileSectionValidator Validator { get; }
 
         [Fact]
         public void Validate_InvalidUserId_Fails()
         {
             // Arrange
-            var command = new DeleteContactSection(
+            var command = new DeleteSkillsProfileSection(
                 Guid.Empty,
                 Guid.NewGuid());
 
@@ -38,7 +38,7 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Contact.Delete
         public void Validate_InvalidCvId_Fails()
         {
             // Arrange
-            var command = new DeleteContactSection(
+            var command = new DeleteSkillsProfileSection(
                 Guid.NewGuid(),
                 Guid.Empty);
 
@@ -50,7 +50,7 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Contact.Delete
         public void Validate_ValidParameters_Passes()
         {
             // Arrange
-            var command = new DeleteContactSection(
+            var command = new DeleteSkillsProfileSection(
                 Guid.NewGuid(),
                 Guid.NewGuid());
 

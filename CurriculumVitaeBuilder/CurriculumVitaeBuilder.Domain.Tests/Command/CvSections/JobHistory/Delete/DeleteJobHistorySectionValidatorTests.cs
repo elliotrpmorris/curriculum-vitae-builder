@@ -1,32 +1,32 @@
-﻿// <copyright file="DeleteContactSectionValidatorTests.cs" company="BJSS">
+﻿// <copyright file="DeleteJobHistorySectionValidatorTests.cs" company="BJSS">
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Contact.Delete
+namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.JobHistory.Delete
 {
     using System;
 
-    using CurriculumVitaeBuilder.Domain.Command.CvSections.Contact.Delete;
+    using CurriculumVitaeBuilder.Domain.Command.CvSections.JobHistory.Delete;
 
     using FluentValidation.TestHelper;
 
     using Xunit;
 
-    public class DeleteContactSectionValidatorTests
+    public class DeleteJobHistorySectionValidatorTests
     {
-        public DeleteContactSectionValidatorTests()
+        public DeleteJobHistorySectionValidatorTests()
         {
-            this.Validator = new DeleteContactSectionValidator();
+            this.Validator = new DeleteJobHistorySectionValidator();
             this.Validator.ConfigureRules();
         }
 
-        private DeleteContactSectionValidator Validator { get; }
+        private DeleteJobHistorySectionValidator Validator { get; }
 
         [Fact]
         public void Validate_InvalidUserId_Fails()
         {
             // Arrange
-            var command = new DeleteContactSection(
+            var command = new DeleteJobHistorySection(
                 Guid.Empty,
                 Guid.NewGuid());
 
@@ -38,7 +38,7 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Contact.Delete
         public void Validate_InvalidCvId_Fails()
         {
             // Arrange
-            var command = new DeleteContactSection(
+            var command = new DeleteJobHistorySection(
                 Guid.NewGuid(),
                 Guid.Empty);
 
@@ -50,7 +50,7 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Contact.Delete
         public void Validate_ValidParameters_Passes()
         {
             // Arrange
-            var command = new DeleteContactSection(
+            var command = new DeleteJobHistorySection(
                 Guid.NewGuid(),
                 Guid.NewGuid());
 

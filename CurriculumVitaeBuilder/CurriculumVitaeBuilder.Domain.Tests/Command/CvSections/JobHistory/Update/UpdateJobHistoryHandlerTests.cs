@@ -1,8 +1,8 @@
-﻿// <copyright file="UpdateEducationSectionHandlerTests.cs" company="BJSS">
+﻿// <copyright file="UpdateJobHistoryHandlerTests.cs" company="BJSS">
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Education.Update
+namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.JobHistory.Update
 {
     using System;
     using System.Collections.Generic;
@@ -11,42 +11,44 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Education.Updat
     using Chest.Core.Command;
     using Chest.Core.Exceptions;
 
-    using CurriculumVitaeBuilder.Domain.Command.CvSections.Education.Update;
+    using CurriculumVitaeBuilder.Domain.Command.CvSections.JobHistory.Update;
     using CurriculumVitaeBuilder.Domain.Data;
     using CurriculumVitaeBuilder.Domain.Data.CvSections;
-    using CurriculumVitaeBuilder.Domain.Data.CvSections.Education;
+    using CurriculumVitaeBuilder.Domain.Data.CvSections.JobHistory;
 
     using NSubstitute;
     using NSubstitute.ReturnsExtensions;
 
     using Xunit;
 
-    public class UpdateEducationSectionHandlerTests
+    public class UpdateJobHistoryHandlerTests
     {
         [Fact]
         public async void Handle_CvDoesntExist_Throws()
         {
             // Arrange
-            var cvSectionReader = Substitute.For<ICvSectionReader<EducationSection>>();
-            var cvSectionWriter = Substitute.For<ICvSectionWriter<EducationSection>>();
+            var cvSectionReader = Substitute.For<ICvSectionReader<JobHistorySection>>();
+            var cvSectionWriter = Substitute.For<ICvSectionWriter<JobHistorySection>>();
             var cvReader = Substitute.For<ICvReader>();
 
-            var handler = new UpdateEducationSectionHandler(
+            var handler = new UpdateJobHistorySectionHandler(
                 cvSectionReader,
                 cvSectionWriter,
                 cvReader);
 
-            var metadata = new CommandMetadata("UpdateEducationSection", DateTime.UtcNow, Guid.NewGuid().ToString());
+            var metadata = new CommandMetadata("UpdateJobHistorySection", DateTime.UtcNow, Guid.NewGuid().ToString());
 
-            var command = new UpdateEducationSection(
+            var command = new UpdateJobHistorySection(
                 Guid.NewGuid(),
                 Guid.NewGuid(),
-                new List<EducationEstablishment>
+                new List<Job>
                 {
-                    new EducationEstablishment(
+                    new Job(
                         "test",
                         DateTime.Now,
-                        DateTime.Now),
+                        DateTime.Now,
+                        "test title",
+                        "test desc"),
                 });
 
             cvReader
@@ -67,26 +69,28 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Education.Updat
         public async void Handle_CvSectionDoesntExist_Throws()
         {
             // Arrange
-            var cvSectionReader = Substitute.For<ICvSectionReader<EducationSection>>();
-            var cvSectionWriter = Substitute.For<ICvSectionWriter<EducationSection>>();
+            var cvSectionReader = Substitute.For<ICvSectionReader<JobHistorySection>>();
+            var cvSectionWriter = Substitute.For<ICvSectionWriter<JobHistorySection>>();
             var cvReader = Substitute.For<ICvReader>();
 
-            var handler = new UpdateEducationSectionHandler(
+            var handler = new UpdateJobHistorySectionHandler(
                 cvSectionReader,
                 cvSectionWriter,
                 cvReader);
 
-            var metadata = new CommandMetadata("UpdateEducationSection", DateTime.UtcNow, Guid.NewGuid().ToString());
+            var metadata = new CommandMetadata("UpdateJobHistorySection", DateTime.UtcNow, Guid.NewGuid().ToString());
 
-            var command = new UpdateEducationSection(
+            var command = new UpdateJobHistorySection(
                 Guid.NewGuid(),
                 Guid.NewGuid(),
-                new List<EducationEstablishment>
+                new List<Job>
                 {
-                    new EducationEstablishment(
+                    new Job(
                         "test",
                         DateTime.Now,
-                        DateTime.Now),
+                        DateTime.Now,
+                        "test title",
+                        "test desc"),
                 });
 
             cvReader
@@ -108,29 +112,31 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Education.Updat
         }
 
         [Fact]
-        public async void Handle_ValidCommand_UpdatesEducationSection()
+        public async void Handle_ValidCommand_UpdatesJobHistorySection()
         {
             // Arrange
-            var cvSectionReader = Substitute.For<ICvSectionReader<EducationSection>>();
-            var cvSectionWriter = Substitute.For<ICvSectionWriter<EducationSection>>();
+            var cvSectionReader = Substitute.For<ICvSectionReader<JobHistorySection>>();
+            var cvSectionWriter = Substitute.For<ICvSectionWriter<JobHistorySection>>();
             var cvReader = Substitute.For<ICvReader>();
 
-            var handler = new UpdateEducationSectionHandler(
+            var handler = new UpdateJobHistorySectionHandler(
                 cvSectionReader,
                 cvSectionWriter,
                 cvReader);
 
-            var metadata = new CommandMetadata("UpdateEducationSection", DateTime.UtcNow, Guid.NewGuid().ToString());
+            var metadata = new CommandMetadata("UpdateJobHistorySection", DateTime.UtcNow, Guid.NewGuid().ToString());
 
-            var command = new UpdateEducationSection(
+            var command = new UpdateJobHistorySection(
                 Guid.NewGuid(),
                 Guid.NewGuid(),
-                new List<EducationEstablishment>
+                new List<Job>
                 {
-                    new EducationEstablishment(
+                    new Job(
                         "test",
                         DateTime.Now,
-                        DateTime.Now),
+                        DateTime.Now,
+                        "test title",
+                        "test desc"),
                 });
 
             cvReader
@@ -139,15 +145,17 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Education.Updat
 
             cvSectionReader
                 .GetSectionByCvAsync(command.CvId)
-                .Returns(new EducationSection(
+                .Returns(new JobHistorySection(
                     Guid.NewGuid(),
                     command.CvId,
-                    new List<EducationEstablishment>
+                    new List<Job>
                     {
-                        new EducationEstablishment(
+                        new Job(
                             "test",
                             DateTime.Now,
-                            DateTime.Now),
+                            DateTime.Now,
+                            "test title",
+                            "test desc"),
                     }));
 
             // Act
@@ -155,9 +163,9 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Education.Updat
             await handler.Handle(command, metadata);
 
             var expectedArgs =
-                Arg.Is<EducationSection>(u =>
+                Arg.Is<JobHistorySection>(u =>
                 u.CvId == command.CvId &&
-                u.EducationEstablishments == command.EducationEstablishments);
+                u.Jobs == command.Jobs);
 
             await cvSectionWriter.Received().UpdateAsync(expectedArgs);
         }

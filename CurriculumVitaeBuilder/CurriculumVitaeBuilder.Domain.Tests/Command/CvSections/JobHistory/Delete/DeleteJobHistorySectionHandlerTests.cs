@@ -1,8 +1,8 @@
-﻿// <copyright file="DeleteContactSectionHandlerTests.cs" company="BJSS">
+﻿// <copyright file="DeleteJobHistorySectionHandlerTests.cs" company="BJSS">
 // Copyright (c) BJSS. All rights reserved.
 // </copyright>
 
-namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Contact.Delete
+namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.JobHistory.Delete
 {
     using System;
     using System.Collections.Generic;
@@ -11,34 +11,34 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Contact.Delete
     using Chest.Core.Command;
     using Chest.Core.Exceptions;
 
-    using CurriculumVitaeBuilder.Domain.Command.CvSections.Contact.Delete;
+    using CurriculumVitaeBuilder.Domain.Command.CvSections.JobHistory.Delete;
     using CurriculumVitaeBuilder.Domain.Data;
     using CurriculumVitaeBuilder.Domain.Data.CvSections;
-    using CurriculumVitaeBuilder.Domain.Data.CvSections.Contact;
+    using CurriculumVitaeBuilder.Domain.Data.CvSections.JobHistory;
 
     using NSubstitute;
     using NSubstitute.ReturnsExtensions;
 
     using Xunit;
 
-    public class DeleteContactSectionHandlerTests
+    public class DeleteJobHistorySectionHandlerTests
     {
         [Fact]
         public async void Handle_CvDoesntExist_Throws()
         {
             // Arrange
-            var cvSectionReader = Substitute.For<ICvSectionReader<ContactSection>>();
-            var cvSectionWriter = Substitute.For<ICvSectionWriter<ContactSection>>();
+            var cvSectionReader = Substitute.For<ICvSectionReader<JobHistorySection>>();
+            var cvSectionWriter = Substitute.For<ICvSectionWriter<JobHistorySection>>();
             var cvReader = Substitute.For<ICvReader>();
 
-            var handler = new DeleteContactSectionHandler(
+            var handler = new DeleteJobHistorySectionHandler(
                 cvSectionReader,
                 cvSectionWriter,
                 cvReader);
 
-            var metadata = new CommandMetadata("DeleteContactSection", DateTime.UtcNow, Guid.NewGuid().ToString());
+            var metadata = new CommandMetadata("DeleteJobHistorySection", DateTime.UtcNow, Guid.NewGuid().ToString());
 
-            var command = new DeleteContactSection(
+            var command = new DeleteJobHistorySection(
                 Guid.NewGuid(),
                 Guid.NewGuid());
 
@@ -60,18 +60,18 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Contact.Delete
         public async void Handle_CvSectionDoesntExist_Throws()
         {
             // Arrange
-            var cvSectionReader = Substitute.For<ICvSectionReader<ContactSection>>();
-            var cvSectionWriter = Substitute.For<ICvSectionWriter<ContactSection>>();
+            var cvSectionReader = Substitute.For<ICvSectionReader<JobHistorySection>>();
+            var cvSectionWriter = Substitute.For<ICvSectionWriter<JobHistorySection>>();
             var cvReader = Substitute.For<ICvReader>();
 
-            var handler = new DeleteContactSectionHandler(
+            var handler = new DeleteJobHistorySectionHandler(
                 cvSectionReader,
                 cvSectionWriter,
                 cvReader);
 
-            var metadata = new CommandMetadata("DeleteContactSection", DateTime.UtcNow, Guid.NewGuid().ToString());
+            var metadata = new CommandMetadata("DeleteJobHistorySection", DateTime.UtcNow, Guid.NewGuid().ToString());
 
-            var command = new DeleteContactSection(
+            var command = new DeleteJobHistorySection(
                 Guid.NewGuid(),
                 Guid.NewGuid());
 
@@ -94,21 +94,21 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Contact.Delete
         }
 
         [Fact]
-        public async void Handle_ValidCommand_DeletesContactSection()
+        public async void Handle_ValidCommand_DeletesJobHistorySection()
         {
             // Arrange
-            var cvSectionReader = Substitute.For<ICvSectionReader<ContactSection>>();
-            var cvSectionWriter = Substitute.For<ICvSectionWriter<ContactSection>>();
+            var cvSectionReader = Substitute.For<ICvSectionReader<JobHistorySection>>();
+            var cvSectionWriter = Substitute.For<ICvSectionWriter<JobHistorySection>>();
             var cvReader = Substitute.For<ICvReader>();
 
-            var handler = new DeleteContactSectionHandler(
+            var handler = new DeleteJobHistorySectionHandler(
                 cvSectionReader,
                 cvSectionWriter,
                 cvReader);
 
-            var metadata = new CommandMetadata("DeleteContactSection", DateTime.UtcNow, Guid.NewGuid().ToString());
+            var metadata = new CommandMetadata("DeleteJobHistorySection", DateTime.UtcNow, Guid.NewGuid().ToString());
 
-            var command = new DeleteContactSection(
+            var command = new DeleteJobHistorySection(
                 Guid.NewGuid(),
                 Guid.NewGuid());
 
@@ -118,12 +118,17 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Contact.Delete
 
             cvSectionReader
                 .GetSectionByCvAsync(command.CvId)
-                .Returns(new ContactSection(
+                .Returns(new JobHistorySection(
                     Guid.NewGuid(),
                     command.CvId,
-                    new Dictionary<string, string>()
+                    new List<Job>
                     {
-                        { "test", "test" },
+                        new Job(
+                            "test",
+                            DateTime.Now,
+                            DateTime.Now,
+                            "test title",
+                            "test description"),
                     }));
 
             // Act
@@ -131,7 +136,7 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Contact.Delete
             await handler.Handle(command, metadata);
 
             var expectedArgs =
-                Arg.Is<ContactSection>(u =>
+                Arg.Is<JobHistorySection>(u =>
                 u.CvId == command.CvId);
 
             await cvSectionWriter.Received().DeleteAsync(expectedArgs);

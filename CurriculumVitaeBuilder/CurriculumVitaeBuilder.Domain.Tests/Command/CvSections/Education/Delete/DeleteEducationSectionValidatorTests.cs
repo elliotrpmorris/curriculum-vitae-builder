@@ -5,8 +5,11 @@
 namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Education.Delete
 {
     using System;
+
     using CurriculumVitaeBuilder.Domain.Command.CvSections.Education.Delete;
+
     using FluentValidation.TestHelper;
+
     using Xunit;
 
     public class DeleteEducationSectionValidatorTests
