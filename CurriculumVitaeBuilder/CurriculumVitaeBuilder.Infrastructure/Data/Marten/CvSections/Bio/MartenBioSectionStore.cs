@@ -133,8 +133,7 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio
                 return;
             }
 
-            var x = section.ToBioSectionDocument();
-            session.Update(x);
+            session.Update(section.ToBioSectionDocument());
 
             await session.SaveChangesAsync();
         }

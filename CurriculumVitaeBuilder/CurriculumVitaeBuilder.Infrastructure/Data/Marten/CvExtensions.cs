@@ -5,7 +5,7 @@
 namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
 {
     using System;
-
+    using System.Linq;
     using CurriculumVitaeBuilder.Domain.Data;
 
     /// <summary>
@@ -45,6 +45,18 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
             return new CvDocument(
                cv.Id,
                cv.UserId);
+        }
+
+        /// <summary>
+        /// Convert From IQueryable of Document to Data Object.
+        /// </summary>
+        /// <param name="source">The Document.</param>
+        /// <returns>The Data Object.</returns>
+        public static IQueryable<Cv> ToCv(this IQueryable<CvDocument> source)
+        {
+            return source.Select(c => new Cv(
+                c.Id,
+                c.UserId));
         }
     }
 }

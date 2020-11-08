@@ -88,9 +88,9 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
                        // Please note these are used for demo purpose only.
                        _.InitialData.Add(new SeedDataSetup(SeedData.UserDocuments));
                        _.InitialData.Add(new SeedDataSetup(SeedData.CvDocuments));
-                       _.InitialData.Add(new SeedDataSetup(SeedData.ContactSectionDocuments));
                        _.InitialData.Add(new SeedDataSetup(SeedData.BioSectionDocuments));
                        _.InitialData.Add(new SeedDataSetup(SeedData.EducationSectionDocuments));
+                       _.InitialData.Add(new SeedDataSetup(SeedData.SkillsProfileSectionDocuments));
                    }));
 
             services

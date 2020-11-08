@@ -9,6 +9,7 @@ namespace CurriculumVitaeBuilder.Api.Controllers.Query
 
     using CurriculumVitaeBuilder.Api.Controllers.Query.UserRoot;
     using CurriculumVitaeBuilder.Api.Controllers.Query.UserRoot.Types;
+    using CurriculumVitaeBuilder.Domain.Data;
     using CurriculumVitaeBuilder.Domain.Data.User;
 
     using GraphQL.Types;
@@ -16,11 +17,12 @@ namespace CurriculumVitaeBuilder.Api.Controllers.Query
     public class RootQuery : ObjectGraphType
     {
         public RootQuery(
-            IUserReader userReader)
+            IUserReader userReader,
+            ICvReader cvReader)
         {
             this.Field<UserQuery>()
                 .Name("user")
-                .Description("The user")
+                .Description("Displays user inofrmation.")
                 .Argument<NonNullGraphType<StringGraphType>>("userId", "The user identifier.")
                 .Resolve(context =>
                 {
@@ -28,8 +30,12 @@ namespace CurriculumVitaeBuilder.Api.Controllers.Query
                 });
 
             this.Field<ListGraphType<UserType>, IReadOnlyList<User>>("users")
-                .Description("The users.")
+                .Description("All the users in the system.")
                 .ResolveAsync(context => userReader.GetUsersAsync());
+
+            this.Field<ListGraphType<CvType>, IReadOnlyList<Cv>>("cvs")
+                .Description("All the CVs in the system.")
+                .ResolveAsync(context => cvReader.GetCvsAsync());
         }
     }
 }

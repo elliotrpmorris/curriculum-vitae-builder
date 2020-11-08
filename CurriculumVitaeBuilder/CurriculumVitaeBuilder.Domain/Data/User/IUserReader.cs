@@ -16,7 +16,6 @@ namespace CurriculumVitaeBuilder.Domain.Data.User
         /// <summary>
         /// Gets all users in system.
         /// </summary>
-        /// <param name="userId">The user identifier.</param>
         /// <returns>The collection of users.</returns>
         public Task<IReadOnlyList<User>> GetUsersAsync();
 

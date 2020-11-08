@@ -166,20 +166,24 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Contact
             using var session = this.DocumentStore.LightweightSession();
 
             var section = await
-               session
+                session
                    .Query<ContactSectionDocument>()
                    .FirstOrDefaultAsync(s =>
-                        s.CvId == cvId &&
-                        s.ContactDetails.ContainsKey(name.ToLower()));
+                        s.CvId == cvId);
 
-            if (section == null)
+            var existingContactDetail =
+                    section.ContactDetails
+                        .FirstOrDefault(c =>
+                            c.Key.ToLower() == name.ToLower());
+
+            if (existingContactDetail.Key == null)
             {
                 Logger.LogInformation($"Section Doesn't contain contact detail: {name}");
 
                 return;
             }
 
-            section.ContactDetails.Remove(name.ToLower());
+            section.ContactDetails.Remove(existingContactDetail);
 
             session.Update(section);
 

@@ -23,10 +23,10 @@ namespace CurriculumVitaeBuilder.Api.Controllers.Query.UserRoot
                     context.Source.UserId));
 
             this.Field<CvType, Cv?>()
-               .Name("cv")
-               .Description("User information")
-               .ResolveAsync(context => cvReader.GetCvByUserAsync(
-                   context.Source.UserId));
+                .Name("cv")
+                .Description("User information")
+                .ResolveAsync(context => cvReader.GetCvByUserAsync(
+                    context.Source.UserId));
         }
     }
 }

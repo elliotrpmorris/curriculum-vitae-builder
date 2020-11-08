@@ -5,6 +5,7 @@
 namespace CurriculumVitaeBuilder.Domain.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -25,5 +26,11 @@ namespace CurriculumVitaeBuilder.Domain.Data
         /// <param name="cvId">The user identifier.</param>
         /// <returns>Whether the Cv exists or not.</returns>
         public Task<bool> GetCvExistsAsync(Guid cvId);
+
+        /// <summary>
+        /// Gets all CVs in system.
+        /// </summary>
+        /// <returns>The collection of CVs.</returns>
+        public Task<IReadOnlyList<Cv>> GetCvsAsync();
     }
 }

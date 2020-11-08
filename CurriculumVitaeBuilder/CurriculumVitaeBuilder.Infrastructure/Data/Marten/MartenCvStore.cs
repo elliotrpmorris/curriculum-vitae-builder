@@ -5,6 +5,7 @@
 namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Chest.Core.Logging;
@@ -82,6 +83,20 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
                     .AnyAsync(s => s.Id == cvId);
 
             return exists;
+        }
+
+        /// <inheritdoc/>
+        public async Task<IReadOnlyList<Cv>> GetCvsAsync()
+        {
+            using var session = this.DocumentStore.LightweightSession();
+
+            var users = await
+                session
+                    .Query<CvDocument>()
+                    .ToCv()
+                    .ToListAsync();
+
+            return users;
         }
     }
 }
