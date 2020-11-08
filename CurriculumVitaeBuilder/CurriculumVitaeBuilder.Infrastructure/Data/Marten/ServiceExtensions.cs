@@ -70,7 +70,7 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
 
                        _.Schema.For<CvDocument>()
                            .Identity(i => i.Id)
-                           .DocumentAlias("cv");
+                           .DocumentAlias("cvs");
 
                        _.Schema.For<CvSectionDocument>()
                            .Identity(i => i.Id)

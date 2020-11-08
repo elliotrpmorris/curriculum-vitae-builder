@@ -32,6 +32,11 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
                 Guid.Parse("3f169b60-3d10-4beb-b6f9-3bfe2e4e5526"),
                 "JohnDoe11",
                 DateTime.Now),
+
+            new UserDocument(
+                Guid.Parse("47b9b5d6-9ece-4284-a675-468979c4452f"),
+                "David",
+                DateTime.Now),
         };
 
         /// <summary>
@@ -43,6 +48,10 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
             new CvDocument(
                 Guid.Parse("fc2bd26b-4dc4-4ad5-85b7-cbe23c2ed0db"),
                 Guid.Parse("3f169b60-3d10-4beb-b6f9-3bfe2e4e5526")),
+
+            new CvDocument(
+                Guid.Parse("9b9cb1ad-a567-4889-95d7-0ecaa8bfef5d"),
+                Guid.Parse("47b9b5d6-9ece-4284-a675-468979c4452f")),
         };
 
         /// <summary>
