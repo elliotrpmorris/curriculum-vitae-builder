@@ -5,7 +5,7 @@ This is a service to build and manipulate CV's
 
 The seed data provides you with an example user and CV with 3/5 of the possible sections pre-populated with some example data.
 
-You can manipulate these sections in any way you like using the provided commands. Most commands require a cvId and a userId this is so in the future a user could have multiple CVs.
+You can manipulate these sections in any way you like using the provided commands. Most commands require a `cvId` and a userId this is so in the future a user could have multiple CVs.
 
 A CV can currently only contain one of each section type.
 
