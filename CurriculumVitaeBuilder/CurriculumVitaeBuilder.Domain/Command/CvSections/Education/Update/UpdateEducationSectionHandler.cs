@@ -57,7 +57,7 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Education.Update
                 throw new InvalidCommandException(
                   metadata.CommandName,
                   typeof(UpdateEducationSection).Name,
-                  $"CV does not exist for user: {command.CvId}.");
+                  $"CV does not exist for user: {command.UserId}.");
             }
 
             var section = await
