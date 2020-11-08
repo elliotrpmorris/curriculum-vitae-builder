@@ -126,14 +126,15 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Bio
                     .Query<BioSectionDocument>()
                     .AnyAsync(s => s.CvId == section.CvId);
 
-            if (exists)
+            if (!exists)
             {
                 Logger.LogInformation($"{section.Title} Section Doesn't exist for {section.CvId}");
 
                 return;
             }
 
-            session.Update(section.ToBioSectionDocument());
+            var x = section.ToBioSectionDocument();
+            session.Update(x);
 
             await session.SaveChangesAsync();
         }

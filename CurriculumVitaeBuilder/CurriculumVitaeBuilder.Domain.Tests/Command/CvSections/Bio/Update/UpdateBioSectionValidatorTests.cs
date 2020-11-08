@@ -5,8 +5,11 @@
 namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Bio.Update
 {
     using System;
+
     using CurriculumVitaeBuilder.Domain.Command.CvSections.Bio.Update;
+
     using FluentValidation.TestHelper;
+
     using Xunit;
 
     public class UpdateBioSectionValidatorTests
@@ -45,40 +48,6 @@ namespace CurriculumVitaeBuilder.Domain.Tests.Command.CvSections.Bio.Update
 
             // Act / Assert
             this.Validator.ShouldHaveValidationErrorFor(x => x.CvId, command);
-        }
-
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData(" ")]
-        public void Validate_InvalidFullName_Fails(string fullName)
-        {
-            // Arrange
-            var command = new UpdateBioSection(
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                fullName,
-                "test city");
-
-            // Act / Assert
-            this.Validator.ShouldHaveValidationErrorFor(x => x.FullName, command);
-        }
-
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData(" ")]
-        public void Validate_InvalidCity_Fails(string city)
-        {
-            // Arrange
-            var command = new UpdateBioSection(
-                Guid.NewGuid(),
-                Guid.NewGuid(),
-                "test",
-                city);
-
-            // Act / Assert
-            this.Validator.ShouldHaveValidationErrorFor(x => x.City, command);
         }
 
         [Fact]

@@ -132,8 +132,8 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.JobHistor
                         .Jobs
                         .ToList()
                         .FindIndex(i =>
-                            i.Employer.Equals(job.Employer) &&
-                            i.JobTitle.Equals(job.JobTitle));
+                            i.Employer.ToLower().Equals(job.Employer.ToLower()) &&
+                            i.JobTitle.ToLower().Equals(job.JobTitle.ToLower()));
 
                 if (existingJobIndex == -1)
                 {
@@ -196,8 +196,8 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.JobHistor
             var jobToRemove = section
                 .Jobs
                 .FirstOrDefault(e =>
-                    e.Employer == employer &&
-                    e.JobTitle == jobTitle);
+                    e.Employer.ToLower() == employer.ToLower() &&
+                    e.JobTitle.ToLower() == jobTitle.ToLower());
 
             section.Jobs.Remove(jobToRemove);
 

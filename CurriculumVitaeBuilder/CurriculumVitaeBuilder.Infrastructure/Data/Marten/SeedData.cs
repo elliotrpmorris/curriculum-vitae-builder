@@ -69,9 +69,9 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten
                 Guid.Parse("fc2bd26b-4dc4-4ad5-85b7-cbe23c2ed0db"),
                 new Dictionary<string, string>()
                 {
-                    { "Email", "hello@hello.com" },
-                    { "Phone", "07949155434" },
-                    { "Website", "https://elliotmorris.dev" },
+                    { "email", "hello@hello.com" },
+                    { "phone", "07949155434" },
+                    { "website", "https://elliotmorris.dev" },
                 }),
         };
 

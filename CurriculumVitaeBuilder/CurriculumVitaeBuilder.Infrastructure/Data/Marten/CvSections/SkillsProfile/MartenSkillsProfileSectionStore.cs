@@ -129,7 +129,7 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.SkillsPro
                     sectionToUpdate
                         .Skills
                         .ToList()
-                        .FindIndex(i => i.Name.Equals(skill.Name));
+                        .FindIndex(i => i.Name.ToLower().Equals(skill.Name.ToLower()));
 
                 if (existingEstablishmentIndex == -1)
                 {
@@ -186,7 +186,7 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.SkillsPro
 
             var skilltoRemove = section
                 .Skills
-                .FirstOrDefault(e => e.Name == name);
+                .FirstOrDefault(e => e.Name.ToLower() == name.ToLower());
 
             section.Skills.Remove(skilltoRemove);
 

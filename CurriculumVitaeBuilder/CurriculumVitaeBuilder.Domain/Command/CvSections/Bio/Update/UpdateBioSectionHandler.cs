@@ -75,8 +75,8 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Bio.Update
                 new BioSection(
                     section.Id,
                     section.CvId,
-                    command.FullName,
-                    command.City));
+                    command.FullName ?? section.FullName,
+                    command.City ?? section.City));
         }
     }
 }

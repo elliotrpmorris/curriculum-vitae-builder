@@ -24,8 +24,8 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Bio.Update
         public UpdateBioSection(
             Guid userId,
             Guid cvId,
-            string fullName,
-            string city)
+            string? fullName = null,
+            string? city = null)
         {
             this.UserId = userId;
             this.CvId = cvId;
@@ -46,11 +46,11 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Bio.Update
         /// <summary>
         /// Gets the full name.
         /// </summary>
-        public string FullName { get; }
+        public string? FullName { get; }
 
         /// <summary>
         /// Gets the city.
         /// </summary>
-        public string City { get; }
+        public string? City { get; }
     }
 }

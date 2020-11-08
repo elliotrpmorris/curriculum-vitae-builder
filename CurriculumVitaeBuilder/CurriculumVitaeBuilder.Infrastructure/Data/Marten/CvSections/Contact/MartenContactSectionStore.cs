@@ -133,12 +133,12 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Contact
                 if (existingContactDetail.Key != null)
                 {
                     // Update value to new value.
-                    sectionToUpdate.ContactDetails[existingContactDetail.Key] = detail.Value;
+                    sectionToUpdate.ContactDetails[existingContactDetail.Key] = detail.Value.ToLower();
                 }
                 else
                 {
                     // New contact detail so try add.
-                    sectionToUpdate.ContactDetails.TryAdd(detail.Key, detail.Value);
+                    sectionToUpdate.ContactDetails.TryAdd(detail.Key.ToLower(), detail.Value.ToLower());
                 }
             }
 
@@ -170,7 +170,7 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Contact
                    .Query<ContactSectionDocument>()
                    .FirstOrDefaultAsync(s =>
                         s.CvId == cvId &&
-                        s.ContactDetails.ContainsKey(name));
+                        s.ContactDetails.ContainsKey(name.ToLower()));
 
             if (section == null)
             {
@@ -179,7 +179,7 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.CvSections.Contact
                 return;
             }
 
-            section.ContactDetails.Remove(name);
+            section.ContactDetails.Remove(name.ToLower());
 
             session.Update(section);
 
