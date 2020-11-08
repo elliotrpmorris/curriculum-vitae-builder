@@ -54,8 +54,6 @@ To get the Curriculum Vitae Builder service up and running locally on your machi
 
 ## Testing the application
 
-Each section has a command for creating, updating, and deleting and any nested objects also have their own delete command. These nested objects can be created and updated on their corresponding section.
-
 1. Open insomnia at the top left click `Application` then `Preferences` then click the `Data` tab. 
 
 2. Click `Import data` then `from file` navigate to the root folder of `curriculum-vitae-builder` and select the `Insomnia_Requests.json`
@@ -133,6 +131,8 @@ query {
 
 ### Sending Commands to the API 
 (Please note this example will be using Insomia but you can also query this using other tools for example Postman is a popular API client)
+
+Each section has a command for creating, updating, and deleting and any nested objects also have their own delete command. But these nested objects can be created and updated on their corresponding section.
 
  1. Open Insomnia. Click the plus and New Request this can be called anything. But make sure the type is `POST`
  
