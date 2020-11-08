@@ -23,6 +23,14 @@ namespace CurriculumVitaeBuilder.Domain.Command.CvSections.Bio.Update
             this.RuleFor(x => x.CvId)
                 .NotEmpty()
                 .WithMessage("A valid cv identifier must be provided");
+
+            this.RuleFor(x => x.City)
+                .NotEmpty()
+                .WithMessage("A city must be provided");
+
+            this.RuleFor(x => x.FullName)
+                .NotEmpty()
+                .WithMessage("A full name must be provided");
         }
     }
 }
