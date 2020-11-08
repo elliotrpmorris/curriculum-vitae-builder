@@ -20,7 +20,8 @@ namespace CurriculumVitaeBuilder.Api.Controllers.Query.UserRoot.Types
     public class CvType : ObjectGraphType<Cv>
     {
         public CvType(
-            CvSectionDataLoader cvSectionDataLoader)
+            CvSectionDataLoader cvSectionDataLoader,
+            UserDataLoader userDataLoader)
         {
             this.Field<IdGraphType, Guid>("id")
                 .Description("The cv identifier.")
@@ -54,6 +55,11 @@ namespace CurriculumVitaeBuilder.Api.Controllers.Query.UserRoot.Types
                .Description("The skills profile section of the cv.")
                .ResolveAsync(context => cvSectionDataLoader.GetJobHistorySectionByCvAsync(
                    context.Source.Id));
+
+            this.Field<StringGraphType, string>("userName")
+                .Description("The users username for the CV.")
+                .ResolveAsync(context => userDataLoader.GetUserNameAsync(
+                    context.Source.UserId));
         }
     }
 }

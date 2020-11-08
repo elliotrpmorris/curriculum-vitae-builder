@@ -22,7 +22,7 @@ namespace CurriculumVitaeBuilder.Api.Controllers.Query
         {
             this.Field<UserQuery>()
                 .Name("user")
-                .Description("Displays user inofrmation.")
+                .Description("Displays user information.")
                 .Argument<NonNullGraphType<StringGraphType>>("userId", "The user identifier.")
                 .Resolve(context =>
                 {

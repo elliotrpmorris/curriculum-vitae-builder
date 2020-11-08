@@ -6,6 +6,7 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.User
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Chest.Core.Logging;
@@ -97,6 +98,26 @@ namespace CurriculumVitaeBuilder.Infrastructure.Data.Marten.User
                     .AnyAsync(s => s.UserName == userName);
 
             return exists;
+        }
+
+        /// <inheritdoc/>
+        public async Task<IDictionary<Guid, string>> GetUserNamesAsync(
+            IReadOnlyCollection<Guid> userIds)
+        {
+            using var session = this.DocumentStore.LightweightSession();
+
+            var sections = await
+                session
+                    .Query<UserDocument>()
+                    .Where(s => s.Id.In(userIds.ToList()))
+                    .ToListAsync();
+
+            if (sections == null)
+            {
+                return new Dictionary<Guid, string>();
+            }
+
+            return sections.ToDictionary(x => x.Id, x => x.UserName);
         }
     }
 }

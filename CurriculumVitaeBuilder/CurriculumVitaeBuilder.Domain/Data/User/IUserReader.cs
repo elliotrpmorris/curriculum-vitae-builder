@@ -32,5 +32,13 @@ namespace CurriculumVitaeBuilder.Domain.Data.User
         /// <param name="userName">The username.</param>
         /// <returns>Whether the user exists or not.</returns>
         public Task<bool> GetUserExistsAsync(string userName);
+
+        /// <summary>
+        /// Gets the user names.
+        /// </summary>
+        /// <param name="userIds">The User identifiers.</param>
+        /// <returns>The dictionary of user identifier and user name.</returns>
+        public Task<IDictionary<Guid, string>> GetUserNamesAsync(
+            IReadOnlyCollection<Guid> userIds);
     }
 }

@@ -71,6 +71,7 @@ namespace CurriculumVitaeBuilder.Api
             services.AddScoped<UserQuery>();
 
             services.AddScoped<CvSectionDataLoader>();
+            services.AddScoped<UserDataLoader>();
 
             services.AddScoped<UserType>();
             services.AddScoped<CvType>();
