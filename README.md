@@ -9,7 +9,7 @@ You can manipulate these sections in any way you like using the provided command
 
 A CV can currently only contain one of each section type.
 
-You can also create users. Upon creation of a user a blank CV created for them. You can then use the commands to manipulate the sections.
+You can also create users. Upon creation of a user a blank CV is created for them. You can then use the commands to manipulate the sections.
 
 The database contains 3 tables to power all of this:
 
