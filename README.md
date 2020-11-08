@@ -5,11 +5,11 @@ This is a service to build and manipulate CV's
 
 The seed data provides you with an example user and CV with 3/5 of the possible sections pre-populated with some example data.
 
-You can manipulate these sections in any way you like using the provided commands. Most commands require a cvId and a userId this is so in the future a user could have multiple CVs.
+You can manipulate these sections in any way you like using the provided commands. Most commands require a `cvId` and a `userId` this is so in the future a user could have multiple CVs.
 
 A CV can currently only contain one of each section type.
 
-You can also create users. Upon creation of a user a blank CV created for them. You can then use the commands to manipulate the sections.
+You can also create users. Upon creation of a user a blank CV is created for them. You can then use the commands to manipulate the sections.
 
 The database contains 3 tables to power all of this:
 
@@ -146,7 +146,7 @@ query {
 
  The above query will display a users CV and its sections.
   
-  Since this API uses GraphQL you can ask for as little or as much as you want of the CV for example if you just wanted the bio and contact sections you can emit the rest of the query.
+  Since this API uses GraphQL you can ask for as little or as much as you want of the CV for example if you just wanted the bio and contact sections you can omit the rest of the query.
   
   You can also view the documentation inside Insomina to see what fields are avalible there. 
   
@@ -157,7 +157,7 @@ query {
 
 Each section has a command for creating, updating, and deleting and any nested objects also have their own delete command. But these nested objects can be created and updated on their corresponding section.
 
- 1. Open Insomnia. Click the plus and New Request this can be called anything. But make sure the type is `POST`
+ 1. Open Insomnia. Click the plus and then New Request you can call this anything. But make sure the type is `POST`
  
  2. On the Body drop down then click Json. 
  
